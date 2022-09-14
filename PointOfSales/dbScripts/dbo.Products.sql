@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Products] (
-    [ProductId]   INT           NOT NULL,
+    [UPC]		  INT           NOT NULL IDENTITY,
     [Name]        VARCHAR (50)  NULL,
-    [Price]       DECIMAL (18)  NULL,
+    [Price]       DECIMAL (10, 2)  NULL,
     [Description] VARCHAR (500) NULL,
-    PRIMARY KEY CLUSTERED ([ProductId] ASC)
+    PRIMARY KEY CLUSTERED ([UPC] ASC)
 );
 
