@@ -167,6 +167,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>dboProducts.mdf</DependentUpon>
     </Content>
+    <Content Include="dbScripts\dbo.Products.sql" />
+    <Content Include="dbScripts\dbo.Users.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -43,6 +43,8 @@ Partial Class frmPointOfSale
         Me.lblCash = New System.Windows.Forms.Label()
         Me.lblChange = New System.Windows.Forms.Label()
         Me.lblChangeAmount = New System.Windows.Forms.Label()
+        Me.txtUPC = New System.Windows.Forms.TextBox()
+        Me.lblUPC = New System.Windows.Forms.Label()
         Me.gbxSelectedProduct.SuspendLayout()
         CType(Me.picProduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -61,7 +63,7 @@ Partial Class frmPointOfSale
         'btnAddProduct
         '
         Me.btnAddProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAddProduct.Location = New System.Drawing.Point(254, 21)
+        Me.btnAddProduct.Location = New System.Drawing.Point(254, 121)
         Me.btnAddProduct.Margin = New System.Windows.Forms.Padding(1)
         Me.btnAddProduct.Name = "btnAddProduct"
         Me.btnAddProduct.Size = New System.Drawing.Size(132, 42)
@@ -72,7 +74,7 @@ Partial Class frmPointOfSale
         'btnRemoveProduct
         '
         Me.btnRemoveProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRemoveProduct.Location = New System.Drawing.Point(254, 225)
+        Me.btnRemoveProduct.Location = New System.Drawing.Point(254, 182)
         Me.btnRemoveProduct.Margin = New System.Windows.Forms.Padding(1)
         Me.btnRemoveProduct.Name = "btnRemoveProduct"
         Me.btnRemoveProduct.Size = New System.Drawing.Size(132, 42)
@@ -83,7 +85,7 @@ Partial Class frmPointOfSale
         'btnVoidTransaction
         '
         Me.btnVoidTransaction.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnVoidTransaction.Location = New System.Drawing.Point(254, 448)
+        Me.btnVoidTransaction.Location = New System.Drawing.Point(254, 243)
         Me.btnVoidTransaction.Margin = New System.Windows.Forms.Padding(1)
         Me.btnVoidTransaction.Name = "btnVoidTransaction"
         Me.btnVoidTransaction.Size = New System.Drawing.Size(132, 42)
@@ -261,11 +263,32 @@ Partial Class frmPointOfSale
         Me.lblChangeAmount.TabIndex = 19
         Me.lblChangeAmount.Text = "$0.00"
         '
+        'txtUPC
+        '
+        Me.txtUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUPC.Location = New System.Drawing.Point(254, 57)
+        Me.txtUPC.Multiline = True
+        Me.txtUPC.Name = "txtUPC"
+        Me.txtUPC.Size = New System.Drawing.Size(132, 40)
+        Me.txtUPC.TabIndex = 20
+        '
+        'lblUPC
+        '
+        Me.lblUPC.AutoSize = True
+        Me.lblUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUPC.Location = New System.Drawing.Point(294, 32)
+        Me.lblUPC.Name = "lblUPC"
+        Me.lblUPC.Size = New System.Drawing.Size(53, 22)
+        Me.lblUPC.TabIndex = 21
+        Me.lblUPC.Text = "UPC:"
+        '
         'frmPointOfSale
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(779, 654)
+        Me.Controls.Add(Me.lblUPC)
+        Me.Controls.Add(Me.txtUPC)
         Me.Controls.Add(Me.lblChangeAmount)
         Me.Controls.Add(Me.lblChange)
         Me.Controls.Add(Me.lblCash)
@@ -316,4 +339,6 @@ Partial Class frmPointOfSale
     Friend WithEvents lblCash As Label
     Friend WithEvents lblChange As Label
     Friend WithEvents lblChangeAmount As Label
+    Friend WithEvents txtUPC As TextBox
+    Friend WithEvents lblUPC As Label
 End Class
