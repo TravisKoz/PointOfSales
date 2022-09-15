@@ -22,7 +22,7 @@ Public Class ClsProduct
         End Set
     End Property
 
-    Public Property Productname As String
+    Public Property ProductName As String
         Get
             Return mstrProductName
         End Get
@@ -40,7 +40,7 @@ Public Class ClsProduct
         End Set
     End Property
 
-    Public Property ProductDescryption As String
+    Public Property ProductDescription As String
         Get
             Return mstrProductDescription
         End Get
