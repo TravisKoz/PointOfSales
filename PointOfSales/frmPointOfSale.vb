@@ -117,7 +117,7 @@ Public Class frmPointOfSale
     Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
         Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
         lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
-        lblSelectedPrice.Text = "$" & objSelectedProduct.ProductPrice.ToString()
+        lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
         lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
 
     End Sub
