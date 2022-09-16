@@ -43,9 +43,14 @@ Public Class frmPointOfSale
     Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
         Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
 
-        lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
-        lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
-        lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
+        'Updates the descrition when a product in the cart is selected.
+        If lbxProducts.SelectedIndex > -1 Then
+            lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
+            lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
+            lblSelectedCategory.Text = objSelectedProduct.ProductCategory.ToString()
+            lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
+        End If
+
     End Sub
 
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
@@ -60,7 +65,11 @@ Public Class frmPointOfSale
         'Adds the Selected product to our list of selected products.
         mlstSelectedProducts.Add(objSelectedProduct)
 
+        'Allows the selected index to update when the first Product is added to the cart.
+        lbxProducts.SelectedIndex = -1
+
         'Changes the product selected in the list box to the newly added product.
+
         lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
 
         'Update the current transaction based on the newly added product.

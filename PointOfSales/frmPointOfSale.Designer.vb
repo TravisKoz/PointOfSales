@@ -28,6 +28,7 @@ Partial Class frmPointOfSale
         Me.btnVoidTransaction = New System.Windows.Forms.Button()
         Me.btnLogout = New System.Windows.Forms.Button()
         Me.gbxSelectedProduct = New System.Windows.Forms.GroupBox()
+        Me.lblSelectedCategory = New System.Windows.Forms.Label()
         Me.lblSelectedPrice = New System.Windows.Forms.Label()
         Me.lblSelectedDescription = New System.Windows.Forms.Label()
         Me.lblSelectedProduct = New System.Windows.Forms.Label()
@@ -106,6 +107,7 @@ Partial Class frmPointOfSale
         '
         'gbxSelectedProduct
         '
+        Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedCategory)
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedPrice)
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedDescription)
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedProduct)
@@ -116,6 +118,16 @@ Partial Class frmPointOfSale
         Me.gbxSelectedProduct.TabIndex = 8
         Me.gbxSelectedProduct.TabStop = False
         Me.gbxSelectedProduct.Text = "Product"
+        '
+        'lblSelectedCategory
+        '
+        Me.lblSelectedCategory.AutoSize = True
+        Me.lblSelectedCategory.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSelectedCategory.Location = New System.Drawing.Point(21, 253)
+        Me.lblSelectedCategory.Name = "lblSelectedCategory"
+        Me.lblSelectedCategory.Size = New System.Drawing.Size(83, 22)
+        Me.lblSelectedCategory.TabIndex = 4
+        Me.lblSelectedCategory.Text = "Category"
         '
         'lblSelectedPrice
         '
@@ -130,9 +142,9 @@ Partial Class frmPointOfSale
         'lblSelectedDescription
         '
         Me.lblSelectedDescription.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSelectedDescription.Location = New System.Drawing.Point(22, 263)
+        Me.lblSelectedDescription.Location = New System.Drawing.Point(22, 290)
         Me.lblSelectedDescription.Name = "lblSelectedDescription"
-        Me.lblSelectedDescription.Size = New System.Drawing.Size(327, 196)
+        Me.lblSelectedDescription.Size = New System.Drawing.Size(327, 187)
         Me.lblSelectedDescription.TabIndex = 2
         Me.lblSelectedDescription.Text = "Description"
         '
@@ -341,4 +353,5 @@ Partial Class frmPointOfSale
     Friend WithEvents lblChangeAmount As Label
     Friend WithEvents txtUPC As TextBox
     Friend WithEvents lblUPC As Label
+    Friend WithEvents lblSelectedCategory As Label
 End Class
