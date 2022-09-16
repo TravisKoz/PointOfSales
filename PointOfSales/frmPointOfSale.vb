@@ -96,4 +96,20 @@ Public Class frmPointOfSale
 
         Return dbConnection
     End Function
+
+    Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
+        Dim intEnteredUPC As Integer = CInt(txtUPC.Text)
+        Dim objSelectedProduct As New ClsProduct
+        objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
+                                                            Return intEnteredUPC = value.CodeUPC
+                                                        End Function)
+        mlstSelectedProducts.Add(objSelectedProduct)
+
+
+
+
+
+
+
+    End Sub
 End Class
