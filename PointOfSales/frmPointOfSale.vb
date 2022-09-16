@@ -7,7 +7,6 @@ Option Explicit On
 
 Imports System.ComponentModel
 Imports System.Data.SqlClient
-Imports System.IO
 
 Public Class frmPointOfSale
 
@@ -15,13 +14,10 @@ Public Class frmPointOfSale
     'Creates lists for our available products and the selected products.
     Dim mlstAvailableProducts As New List(Of ClsProduct)
     Dim mlstSelectedProducts As New BindingList(Of ClsProduct)
+    Dim mobjCurrentTransaction As New ClsTransaction
 
-
-    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-
-        'Closes the Point Of Sale Form.
-        Me.Close()
-    End Sub
+    'Define the form's constants
+    Const TaxRate As Double = 0.05
 
     Private Sub frmPointOfSale_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -32,8 +28,52 @@ Public Class frmPointOfSale
         lbxProducts.DataSource = mlstSelectedProducts
         lbxProducts.DisplayMember = "ProductName"
 
+        'Sets the current transaction Price, Tax, and Total to 0.00.
+        mobjCurrentTransaction.Price = 0.00
+        mobjCurrentTransaction.Tax = 0.00
+        mobjCurrentTransaction.Total = 0.00
+
+        'Starts a list of products for our current transaction.
+        mobjCurrentTransaction.Products = New List(Of ClsProduct)
+
         'Starts the form out focused on the UPC text box.
         txtUPC.Focus()
+    End Sub
+
+    Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
+        Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
+
+        lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
+        lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
+        lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
+    End Sub
+
+    Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
+        Dim intEnteredUPC As Integer = CInt(txtUPC.Text)
+        Dim objSelectedProduct As New ClsProduct
+
+        'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
+        objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
+                                                            Return intEnteredUPC = value.CodeUPC
+                                                        End Function)
+
+        'Adds the Selected product to our list of selected products.
+        mlstSelectedProducts.Add(objSelectedProduct)
+
+        'Changes the product selected in the list box to the newly added product.
+        lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
+
+        'Update the current transaction based on the newly added product.
+        mobjCurrentTransaction.Products.Add(objSelectedProduct)
+        mobjCurrentTransaction.Price += objSelectedProduct.ProductPrice
+        mobjCurrentTransaction.Tax = mobjCurrentTransaction.Price * TaxRate
+        mobjCurrentTransaction.Total = mobjCurrentTransaction.Price + mobjCurrentTransaction.Tax
+    End Sub
+
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+
+        'Closes the Point Of Sale Form.
+        Me.Close()
     End Sub
 
     Private Sub LoadProducts()
@@ -67,7 +107,6 @@ Public Class frmPointOfSale
         'Close and dipose the database connection.
         dbConnection.Close()
         dbConnection.Dispose()
-
     End Sub
 
     Private Function OpenDBConnection() As SqlConnection
@@ -92,28 +131,4 @@ Public Class frmPointOfSale
 
         Return dbConnection
     End Function
-
-    Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
-        Dim intEnteredUPC As Integer = CInt(txtUPC.Text)
-        Dim objSelectedProduct As New ClsProduct
-
-        'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
-        objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
-                                                            Return intEnteredUPC = value.CodeUPC
-                                                        End Function)
-
-        'Adds the Selected product to our list of selected products.
-        mlstSelectedProducts.Add(objSelectedProduct)
-
-        'Changes the product selected in the list box to the newly added product.
-        lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
-
-    End Sub
-
-    Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
-        Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
-        lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
-        lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
-        lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
-    End Sub
 End Class
