@@ -34,10 +34,7 @@ Public Class frmPointOfSale
 
         'Starts the form out focused on the UPC text box.
         txtUPC.Focus()
-
     End Sub
-
-
 
     Private Sub LoadProducts()
 
@@ -64,7 +61,6 @@ Public Class frmPointOfSale
 
                 'Adds the stored product to the list of available products.
                 mlstAvailableProducts.Add(objStoredProduct)
-
             End While
         End If
 
@@ -119,6 +115,5 @@ Public Class frmPointOfSale
         lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
         lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
         lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
-
     End Sub
 End Class

@@ -26,8 +26,8 @@ Public Class ClsProduct
         Get
             Return mstrProductName
         End Get
-        Set
-            mstrProductName = Value
+        Set(value As String)
+            mstrProductName = value
         End Set
     End Property
 
