@@ -100,16 +100,25 @@ Public Class frmPointOfSale
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
         Dim intEnteredUPC As Integer = CInt(txtUPC.Text)
         Dim objSelectedProduct As New ClsProduct
+
+        'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
         objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
                                                             Return intEnteredUPC = value.CodeUPC
                                                         End Function)
+
+        'Adds the Selected product to our list of selected products.
         mlstSelectedProducts.Add(objSelectedProduct)
 
+        'Changes the product selected in the list box to the newly added product.
+        lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
 
+    End Sub
 
-
-
-
+    Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
+        Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
+        lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
+        lblSelectedPrice.Text = "$" & objSelectedProduct.ProductPrice.ToString()
+        lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
 
     End Sub
 End Class
