@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[Products] (
     PRIMARY KEY CLUSTERED ([UPC] ASC)
 );
 
--- Populate table with data
+-- Populate table with data | If new table data is added, paste the new table data query over this section
 SET IDENTITY_INSERT [dbo].[Products] ON
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (1, N'Milk', CAST(3.46 AS Decimal(18, 2)), N'Whole Milk Gallon', N'Grocery')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (2, N'Bacon', CAST(4.48 AS Decimal(18, 2)), N'Thick Slide Bacon Smoked 16oz package', N'Grocery')
