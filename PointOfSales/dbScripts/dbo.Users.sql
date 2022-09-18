@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS [dbo].[Users]
 
 -- Create the table Products
 CREATE TABLE [dbo].[Users] (
-    [UserId]   INT          NOT NULL,
+    [UserId]   INT          IDENTITY (1, 1) NOT NULL,
     [Username] VARCHAR (40) NULL,
     [Password] VARCHAR (30) NULL,
     PRIMARY KEY CLUSTERED ([UserId] ASC)
@@ -25,4 +25,3 @@ INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (8, N'bBohns
 INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (9, N'kUtgure', N'kylePassword')
 INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (10, N'jCooley', N'joshPassword')
 SET IDENTITY_INSERT [dbo].[Users] OFF
-
