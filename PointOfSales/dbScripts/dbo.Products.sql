@@ -46,8 +46,7 @@ INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (28, N'COVID-19 Test', CAST(19.88 AS Decimal(18, 2)), N'BinaxNOW COVID-19 Antigen Self Test by Abbott (2 Count)', N'Pharmacy')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (29, N'Alcohol Liquid', CAST(6.22 AS Decimal(18, 2)), N'Equate 91% Isopropyl Alcohol Liquid Antiseptic, 32 fl oz, Twin Pack', N'Pharmacy')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (30, N'First Aid Kit', CAST(11.88 AS Decimal(18, 2)), N'Equate 140pc All Purpose First Aid Kit', N'Pharmacy')
-INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (31, N'Floor Mats', CAST(18.88 AS Decimal(18, 2)), N'Genuine Dickies 80030DCWDI Automotive Floor Mats Trim to Fit All-Weather Rubber, Black, 4 Pieces
-', N'Auto')
+INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (31, N'Floor Mats', CAST(18.88 AS Decimal(18, 2)), N'Genuine Dickies 80030DCWDI Automotive Floor Mats Trim to Fit All-Weather Rubber, Black, 4 Pieces', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (32, N'Steering Wheel Cover', CAST(16.98 AS Decimal(18, 2)), N'Genuine Dickies Classics Steering Wheel Cover Universal, Pinstripe Black', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (33, N'Booster Cables Set', CAST(20.00 AS Decimal(18, 2)), N'EverStart Travel Pro Safety Kit, Emergency, Roadside Assistance, Booster Cables', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (34, N'Car Care Kit ', CAST(13.38 AS Decimal(18, 2)), N'Armor All Complete Car Care Kit (4 Pieces), Car Cleaning', N'Auto')
