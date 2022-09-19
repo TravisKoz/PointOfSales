@@ -77,6 +77,10 @@ Public Class frmPointOfSale
         mobjCurrentTransaction.Price += objSelectedProduct.ProductPrice
         mobjCurrentTransaction.Tax = mobjCurrentTransaction.Price * TaxRate
         mobjCurrentTransaction.Total = mobjCurrentTransaction.Price + mobjCurrentTransaction.Tax
+
+        lblPriceAmount.Text = mobjCurrentTransaction.Price.ToString("C")
+        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
+        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
