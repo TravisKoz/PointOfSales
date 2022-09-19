@@ -1,21 +1,4 @@
-﻿-- To run this query properly, make sure you right click dboProducts.mdf, 
--- left click New Query, then paste this query into the new query
-
--- Drop the old table if it exists
-DROP TABLE IF EXISTS [dbo].[Products]
-
--- Create the table Products
-CREATE TABLE [dbo].[Products] (
-    [UPC]         INT           IDENTITY (1, 1) NOT NULL,
-    [Name]        VARCHAR (50)  NULL,
-    [Price]       DECIMAL (18, 2)  NULL,
-    [Description] VARCHAR (500) NULL,
-    [Department]  VARCHAR (15)  NULL,
-    PRIMARY KEY CLUSTERED ([UPC] ASC)
-);
-
--- Populate table with data
-SET IDENTITY_INSERT [dbo].[Products] ON
+﻿SET IDENTITY_INSERT [dbo].[Products] ON
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (1, N'Milk', CAST(3.46 AS Decimal(18, 2)), N'Whole Milk Gallon', N'Grocery')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (2, N'Bacon', CAST(4.48 AS Decimal(18, 2)), N'Thick Slide Bacon Smoked 16oz package', N'Grocery')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (3, N'White Rice', CAST(1.54 AS Decimal(18, 2)), N'Long Grain Rice, 32oz bag', N'Grocery')
@@ -53,4 +36,3 @@ INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (34, N'Car Care Kit ', CAST(13.38 AS Decimal(18, 2)), N'Armor All Complete Car Care Kit (4 Pieces), Car Cleaning', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (35, N'Wiper Blades 22', CAST(24.53 AS Decimal(18, 2)), N'TRICO Gold 2 Pack All Weather Automotive Replacement Wiper Blades 22 and 22 Inch (18-2222)', N'Auto')
 SET IDENTITY_INSERT [dbo].[Products] OFF
-
