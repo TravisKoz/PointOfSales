@@ -54,33 +54,51 @@ Public Class frmPointOfSale
     End Sub
 
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
-        Dim intEnteredUPC As Integer = CInt(txtUPC.Text)
+        Dim intEnteredUPC As Integer
         Dim objSelectedProduct As New ClsProduct
 
-        'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
-        objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
-                                                            Return intEnteredUPC = value.CodeUPC
-                                                        End Function)
+        Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
 
-        'Adds the Selected product to our list of selected products.
-        mlstSelectedProducts.Add(objSelectedProduct)
+        If blnIsValidIdInteger Then
+            'UPC entered was an Intrger
+            If intEnteredUPC > 0 And intEnteredUPC <= mlstAvailableProducts.Count Then
+                'Entered UPC was in the range of valid UPC's.
 
-        'Allows the selected index to update when the first Product is added to the cart.
-        lbxProducts.SelectedIndex = -1
+                'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
+                objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
+                                                                    Return intEnteredUPC = value.CodeUPC
+                                                                End Function)
 
-        'Changes the product selected in the list box to the newly added product.
+                'Adds the Selected product to our list of selected products.
+                mlstSelectedProducts.Add(objSelectedProduct)
 
-        lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
+                'Allows the selected index to update when the first Product is added to the cart.
+                lbxProducts.SelectedIndex = -1
 
-        'Update the current transaction based on the newly added product.
-        mobjCurrentTransaction.Products.Add(objSelectedProduct)
-        mobjCurrentTransaction.Price += objSelectedProduct.ProductPrice
-        mobjCurrentTransaction.Tax = mobjCurrentTransaction.Price * TaxRate
-        mobjCurrentTransaction.Total = mobjCurrentTransaction.Price + mobjCurrentTransaction.Tax
+                'Changes the product selected in the list box to the newly added product.
 
-        lblPriceAmount.Text = mobjCurrentTransaction.Price.ToString("C")
-        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
-        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+                lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
+
+                'Update the current transaction based on the newly added product.
+                mobjCurrentTransaction.Products.Add(objSelectedProduct)
+                mobjCurrentTransaction.Price += objSelectedProduct.ProductPrice
+                mobjCurrentTransaction.Tax = mobjCurrentTransaction.Price * TaxRate
+                mobjCurrentTransaction.Total = mobjCurrentTransaction.Price + mobjCurrentTransaction.Tax
+
+                lblPriceAmount.Text = mobjCurrentTransaction.Price.ToString("C")
+                lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
+                lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+
+            Else
+                'Entered UPC wasn't in the range of valid UPC's.
+                MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
+            End If
+
+        Else
+            'UPC entered wasn't an integer.
+            MessageBox.Show("UPC must be an integer value. Please try again.")
+        End If
+
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
