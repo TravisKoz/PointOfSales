@@ -13,7 +13,7 @@ Public Class frmPointOfSale
     'Define the form's global variables
     'Creates lists for our available products and the selected products.
     Dim mlstAvailableProducts As New List(Of ClsProduct)
-    Dim mlstSelectedProducts As New BindingList(Of ClsProduct)
+    Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
 
     'Define the form's constants
@@ -25,11 +25,11 @@ Public Class frmPointOfSale
         LoadProducts()
 
         'Binds our list of selected Products to its repective list box.
-        lbxProducts.DataSource = mlstSelectedProducts
+        lbxProducts.DataSource = mlstCart
         lbxProducts.DisplayMember = "ProductName"
 
-        'Sets the current transaction Price, Tax, and Total to 0.00.
-        mobjCurrentTransaction.Price = 0.00
+        'Sets the current transaction SubTotal, Tax, and Total to 0.00.
+        mobjCurrentTransaction.SubTotal = 0.00
         mobjCurrentTransaction.Tax = 0.00
         mobjCurrentTransaction.Total = 0.00
 
@@ -60,7 +60,7 @@ Public Class frmPointOfSale
         Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
 
         If blnIsValidIdInteger Then
-            'UPC entered was an Intrger
+            'UPC entered was an Integer
             If intEnteredUPC > 0 And intEnteredUPC <= mlstAvailableProducts.Count Then
                 'Entered UPC was in the range of valid UPC's.
 
@@ -70,25 +70,24 @@ Public Class frmPointOfSale
                                                                 End Function)
 
                 'Adds the Selected product to our list of selected products.
-                mlstSelectedProducts.Add(objSelectedProduct)
+                mlstCart.Add(objSelectedProduct)
 
                 'Allows the selected index to update when the first Product is added to the cart.
                 lbxProducts.SelectedIndex = -1
 
                 'Changes the product selected in the list box to the newly added product.
 
-                lbxProducts.SelectedIndex = mlstSelectedProducts.Count - 1
+                lbxProducts.SelectedIndex = mlstCart.Count - 1
 
                 'Update the current transaction based on the newly added product.
                 mobjCurrentTransaction.Products.Add(objSelectedProduct)
-                mobjCurrentTransaction.Price += objSelectedProduct.ProductPrice
-                mobjCurrentTransaction.Tax = mobjCurrentTransaction.Price * TaxRate
-                mobjCurrentTransaction.Total = mobjCurrentTransaction.Price + mobjCurrentTransaction.Tax
+                mobjCurrentTransaction.SubTotal += objSelectedProduct.ProductPrice
+                mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
+                mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
 
-                lblPriceAmount.Text = mobjCurrentTransaction.Price.ToString("C")
+                lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
                 lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
                 lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
-
             Else
                 'Entered UPC wasn't in the range of valid UPC's.
                 MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())

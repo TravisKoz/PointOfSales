@@ -34,10 +34,10 @@ Partial Class frmPointOfSale
         Me.lblSelectedProduct = New System.Windows.Forms.Label()
         Me.picProduct = New System.Windows.Forms.PictureBox()
         Me.btnPay = New System.Windows.Forms.Button()
-        Me.lblPrice = New System.Windows.Forms.Label()
+        Me.lblSubTotal = New System.Windows.Forms.Label()
         Me.lblTotal = New System.Windows.Forms.Label()
         Me.lblTax = New System.Windows.Forms.Label()
-        Me.lblPriceAmount = New System.Windows.Forms.Label()
+        Me.lblSubTotalAmount = New System.Windows.Forms.Label()
         Me.lblTaxAmount = New System.Windows.Forms.Label()
         Me.lblTotalAmount = New System.Windows.Forms.Label()
         Me.txtCash = New System.Windows.Forms.TextBox()
@@ -46,6 +46,7 @@ Partial Class frmPointOfSale
         Me.lblChangeAmount = New System.Windows.Forms.Label()
         Me.txtUPC = New System.Windows.Forms.TextBox()
         Me.lblUPC = New System.Windows.Forms.Label()
+        Me.lblCart = New System.Windows.Forms.Label()
         Me.gbxSelectedProduct.SuspendLayout()
         CType(Me.picProduct, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -55,16 +56,16 @@ Partial Class frmPointOfSale
         Me.lbxProducts.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbxProducts.FormattingEnabled = True
         Me.lbxProducts.ItemHeight = 16
-        Me.lbxProducts.Location = New System.Drawing.Point(10, 10)
+        Me.lbxProducts.Location = New System.Drawing.Point(10, 37)
         Me.lbxProducts.Margin = New System.Windows.Forms.Padding(1)
         Me.lbxProducts.Name = "lbxProducts"
-        Me.lbxProducts.Size = New System.Drawing.Size(227, 468)
+        Me.lbxProducts.Size = New System.Drawing.Size(227, 452)
         Me.lbxProducts.TabIndex = 0
         '
         'btnAddProduct
         '
         Me.btnAddProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAddProduct.Location = New System.Drawing.Point(254, 121)
+        Me.btnAddProduct.Location = New System.Drawing.Point(254, 101)
         Me.btnAddProduct.Margin = New System.Windows.Forms.Padding(1)
         Me.btnAddProduct.Name = "btnAddProduct"
         Me.btnAddProduct.Size = New System.Drawing.Size(132, 42)
@@ -75,7 +76,7 @@ Partial Class frmPointOfSale
         'btnRemoveProduct
         '
         Me.btnRemoveProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRemoveProduct.Location = New System.Drawing.Point(254, 182)
+        Me.btnRemoveProduct.Location = New System.Drawing.Point(254, 162)
         Me.btnRemoveProduct.Margin = New System.Windows.Forms.Padding(1)
         Me.btnRemoveProduct.Name = "btnRemoveProduct"
         Me.btnRemoveProduct.Size = New System.Drawing.Size(132, 42)
@@ -86,7 +87,7 @@ Partial Class frmPointOfSale
         'btnVoidTransaction
         '
         Me.btnVoidTransaction.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnVoidTransaction.Location = New System.Drawing.Point(254, 243)
+        Me.btnVoidTransaction.Location = New System.Drawing.Point(254, 223)
         Me.btnVoidTransaction.Margin = New System.Windows.Forms.Padding(1)
         Me.btnVoidTransaction.Name = "btnVoidTransaction"
         Me.btnVoidTransaction.Size = New System.Drawing.Size(132, 42)
@@ -97,7 +98,7 @@ Partial Class frmPointOfSale
         'btnLogout
         '
         Me.btnLogout.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLogout.Location = New System.Drawing.Point(623, 606)
+        Me.btnLogout.Location = New System.Drawing.Point(623, 586)
         Me.btnLogout.Margin = New System.Windows.Forms.Padding(1)
         Me.btnLogout.Name = "btnLogout"
         Me.btnLogout.Size = New System.Drawing.Size(132, 42)
@@ -112,7 +113,7 @@ Partial Class frmPointOfSale
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedDescription)
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedProduct)
         Me.gbxSelectedProduct.Controls.Add(Me.picProduct)
-        Me.gbxSelectedProduct.Location = New System.Drawing.Point(419, 10)
+        Me.gbxSelectedProduct.Location = New System.Drawing.Point(423, 9)
         Me.gbxSelectedProduct.Name = "gbxSelectedProduct"
         Me.gbxSelectedProduct.Size = New System.Drawing.Size(355, 480)
         Me.gbxSelectedProduct.TabIndex = 8
@@ -169,28 +170,28 @@ Partial Class frmPointOfSale
         'btnPay
         '
         Me.btnPay.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPay.Location = New System.Drawing.Point(224, 594)
+        Me.btnPay.Location = New System.Drawing.Point(224, 574)
         Me.btnPay.Name = "btnPay"
         Me.btnPay.Size = New System.Drawing.Size(221, 54)
         Me.btnPay.TabIndex = 9
         Me.btnPay.Text = "Pay"
         Me.btnPay.UseVisualStyleBackColor = True
         '
-        'lblPrice
+        'lblSubTotal
         '
-        Me.lblPrice.AutoSize = True
-        Me.lblPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPrice.Location = New System.Drawing.Point(6, 518)
-        Me.lblPrice.Name = "lblPrice"
-        Me.lblPrice.Size = New System.Drawing.Size(56, 22)
-        Me.lblPrice.TabIndex = 10
-        Me.lblPrice.Text = "Price:"
+        Me.lblSubTotal.AutoSize = True
+        Me.lblSubTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSubTotal.Location = New System.Drawing.Point(6, 498)
+        Me.lblSubTotal.Name = "lblSubTotal"
+        Me.lblSubTotal.Size = New System.Drawing.Size(93, 22)
+        Me.lblSubTotal.TabIndex = 10
+        Me.lblSubTotal.Text = "Sub Total:"
         '
         'lblTotal
         '
         Me.lblTotal.AutoSize = True
         Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotal.Location = New System.Drawing.Point(6, 617)
+        Me.lblTotal.Location = New System.Drawing.Point(6, 597)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(56, 22)
         Me.lblTotal.TabIndex = 11
@@ -200,27 +201,27 @@ Partial Class frmPointOfSale
         '
         Me.lblTax.AutoSize = True
         Me.lblTax.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTax.Location = New System.Drawing.Point(6, 565)
+        Me.lblTax.Location = New System.Drawing.Point(6, 545)
         Me.lblTax.Name = "lblTax"
         Me.lblTax.Size = New System.Drawing.Size(46, 22)
         Me.lblTax.TabIndex = 12
         Me.lblTax.Text = "Tax:"
         '
-        'lblPriceAmount
+        'lblSubTotalAmount
         '
-        Me.lblPriceAmount.AutoSize = True
-        Me.lblPriceAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPriceAmount.Location = New System.Drawing.Point(97, 518)
-        Me.lblPriceAmount.Name = "lblPriceAmount"
-        Me.lblPriceAmount.Size = New System.Drawing.Size(55, 22)
-        Me.lblPriceAmount.TabIndex = 13
-        Me.lblPriceAmount.Text = "$0.00"
+        Me.lblSubTotalAmount.AutoSize = True
+        Me.lblSubTotalAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSubTotalAmount.Location = New System.Drawing.Point(97, 498)
+        Me.lblSubTotalAmount.Name = "lblSubTotalAmount"
+        Me.lblSubTotalAmount.Size = New System.Drawing.Size(55, 22)
+        Me.lblSubTotalAmount.TabIndex = 13
+        Me.lblSubTotalAmount.Text = "$0.00"
         '
         'lblTaxAmount
         '
         Me.lblTaxAmount.AutoSize = True
         Me.lblTaxAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTaxAmount.Location = New System.Drawing.Point(97, 565)
+        Me.lblTaxAmount.Location = New System.Drawing.Point(97, 545)
         Me.lblTaxAmount.Name = "lblTaxAmount"
         Me.lblTaxAmount.Size = New System.Drawing.Size(55, 22)
         Me.lblTaxAmount.TabIndex = 14
@@ -230,7 +231,7 @@ Partial Class frmPointOfSale
         '
         Me.lblTotalAmount.AutoSize = True
         Me.lblTotalAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotalAmount.Location = New System.Drawing.Point(97, 617)
+        Me.lblTotalAmount.Location = New System.Drawing.Point(97, 597)
         Me.lblTotalAmount.Name = "lblTotalAmount"
         Me.lblTotalAmount.Size = New System.Drawing.Size(55, 22)
         Me.lblTotalAmount.TabIndex = 15
@@ -239,7 +240,7 @@ Partial Class frmPointOfSale
         'txtCash
         '
         Me.txtCash.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCash.Location = New System.Drawing.Point(224, 536)
+        Me.txtCash.Location = New System.Drawing.Point(224, 516)
         Me.txtCash.Multiline = True
         Me.txtCash.Name = "txtCash"
         Me.txtCash.Size = New System.Drawing.Size(221, 51)
@@ -249,7 +250,7 @@ Partial Class frmPointOfSale
         '
         Me.lblCash.AutoSize = True
         Me.lblCash.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCash.Location = New System.Drawing.Point(304, 511)
+        Me.lblCash.Location = New System.Drawing.Point(304, 491)
         Me.lblCash.Name = "lblCash"
         Me.lblCash.Size = New System.Drawing.Size(57, 22)
         Me.lblCash.TabIndex = 17
@@ -259,7 +260,7 @@ Partial Class frmPointOfSale
         '
         Me.lblChange.AutoSize = True
         Me.lblChange.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblChange.Location = New System.Drawing.Point(473, 550)
+        Me.lblChange.Location = New System.Drawing.Point(473, 530)
         Me.lblChange.Name = "lblChange"
         Me.lblChange.Size = New System.Drawing.Size(78, 22)
         Me.lblChange.TabIndex = 18
@@ -269,7 +270,7 @@ Partial Class frmPointOfSale
         '
         Me.lblChangeAmount.AutoSize = True
         Me.lblChangeAmount.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblChangeAmount.Location = New System.Drawing.Point(557, 550)
+        Me.lblChangeAmount.Location = New System.Drawing.Point(557, 530)
         Me.lblChangeAmount.Name = "lblChangeAmount"
         Me.lblChangeAmount.Size = New System.Drawing.Size(55, 22)
         Me.lblChangeAmount.TabIndex = 19
@@ -278,7 +279,7 @@ Partial Class frmPointOfSale
         'txtUPC
         '
         Me.txtUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUPC.Location = New System.Drawing.Point(254, 57)
+        Me.txtUPC.Location = New System.Drawing.Point(254, 37)
         Me.txtUPC.Multiline = True
         Me.txtUPC.Name = "txtUPC"
         Me.txtUPC.Size = New System.Drawing.Size(132, 40)
@@ -288,17 +289,28 @@ Partial Class frmPointOfSale
         '
         Me.lblUPC.AutoSize = True
         Me.lblUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUPC.Location = New System.Drawing.Point(294, 32)
+        Me.lblUPC.Location = New System.Drawing.Point(294, 12)
         Me.lblUPC.Name = "lblUPC"
         Me.lblUPC.Size = New System.Drawing.Size(53, 22)
         Me.lblUPC.TabIndex = 21
         Me.lblUPC.Text = "UPC:"
         '
+        'lblCart
+        '
+        Me.lblCart.AutoSize = True
+        Me.lblCart.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCart.Location = New System.Drawing.Point(97, 12)
+        Me.lblCart.Name = "lblCart"
+        Me.lblCart.Size = New System.Drawing.Size(44, 22)
+        Me.lblCart.TabIndex = 22
+        Me.lblCart.Text = "Cart"
+        '
         'frmPointOfSale
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(829, 673)
+        Me.ClientSize = New System.Drawing.Size(801, 640)
+        Me.Controls.Add(Me.lblCart)
         Me.Controls.Add(Me.lblUPC)
         Me.Controls.Add(Me.txtUPC)
         Me.Controls.Add(Me.lblChangeAmount)
@@ -307,10 +319,10 @@ Partial Class frmPointOfSale
         Me.Controls.Add(Me.txtCash)
         Me.Controls.Add(Me.lblTotalAmount)
         Me.Controls.Add(Me.lblTaxAmount)
-        Me.Controls.Add(Me.lblPriceAmount)
+        Me.Controls.Add(Me.lblSubTotalAmount)
         Me.Controls.Add(Me.lblTax)
         Me.Controls.Add(Me.lblTotal)
-        Me.Controls.Add(Me.lblPrice)
+        Me.Controls.Add(Me.lblSubTotal)
         Me.Controls.Add(Me.btnPay)
         Me.Controls.Add(Me.gbxSelectedProduct)
         Me.Controls.Add(Me.btnLogout)
@@ -341,10 +353,10 @@ Partial Class frmPointOfSale
     Friend WithEvents lblSelectedProduct As Label
     Friend WithEvents picProduct As PictureBox
     Friend WithEvents btnPay As Button
-    Friend WithEvents lblPrice As Label
+    Friend WithEvents lblSubTotal As Label
     Friend WithEvents lblTotal As Label
     Friend WithEvents lblTax As Label
-    Friend WithEvents lblPriceAmount As Label
+    Friend WithEvents lblSubTotalAmount As Label
     Friend WithEvents lblTaxAmount As Label
     Friend WithEvents lblTotalAmount As Label
     Friend WithEvents txtCash As TextBox
@@ -354,4 +366,5 @@ Partial Class frmPointOfSale
     Friend WithEvents txtUPC As TextBox
     Friend WithEvents lblUPC As Label
     Friend WithEvents lblSelectedCategory As Label
+    Friend WithEvents lblCart As Label
 End Class

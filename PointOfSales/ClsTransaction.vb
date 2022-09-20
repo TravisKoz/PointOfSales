@@ -9,7 +9,7 @@ Public Class ClsTransaction
 
     'Define Class Level Fields
     Private mlstProducts As List(Of ClsProduct)
-    Private mdblPrice As Double
+    Private mdblSubTotal As Double
     Private mdblTax As Double
     Private mdblTotal As Double
 
@@ -23,12 +23,12 @@ Public Class ClsTransaction
         End Set
     End Property
 
-    Public Property Price As Double
+    Public Property SubTotal As Double
         Get
-            Return mdblPrice
+            Return mdblSubTotal
         End Get
         Set(value As Double)
-            mdblPrice = value
+            mdblSubTotal = value
         End Set
     End Property
 
