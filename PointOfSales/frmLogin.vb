@@ -11,12 +11,37 @@ Public Class frmLogin
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim frmSalesWindow As New frmPointOfSale
 
-        'Hides the Login Form
-        Me.Hide()
+        Dim strEnteredUsername As String = txtUserName.Text.ToString()
+        Dim strEnteredPassword As String = txtPassword.Text.ToString()
+        Dim objEnteredUser As New ClsUser
 
-        'Navigates to the Point of Sale Form
-        frmSalesWindow.ShowDialog()
+        Try
+            'Finds the user in the list of available users with the entered UPC and stores it as the selected User.
+            objEnteredUser = mListAvailableUsers.Find(Function(value As ClsUser)
+                                                          Return strEnteredUsername = value.Username
+                                                      End Function)
 
+            If objEnteredUser.Password = strEnteredPassword Then
+                ' The entered password matches the password for the entered user
+
+                'Hides the Login Form
+                Me.Hide()
+
+                'Navigates to the Point of Sale Form
+                frmSalesWindow.ShowDialog()
+
+            Else
+                'The entered password doesn't match the password for the entered user
+                'Display Invalid Entry Message
+                MessageBox.Show("Invalid Username or Password! Please Try Again")
+
+            End If
+
+            ' A Null Reference or another exception was thrown.
+        Catch ex As Exception
+            'Display Invalid Entry Message
+            MessageBox.Show("Invalid Username or Password! Please Try Again")
+        End Try
     End Sub
 
     Private Sub LoadUsers()
