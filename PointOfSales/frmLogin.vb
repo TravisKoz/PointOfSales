@@ -44,6 +44,7 @@ Public Class frmLogin
         End Try
     End Sub
 
+
     Private Sub LoadUsers()
 
         'Open the Products Database
