@@ -98,13 +98,68 @@ Public Class frmPointOfSale
             MessageBox.Show("UPC must be an integer value. Please try again.")
         End If
 
+        'After an item is added put focus and empty the UPC text box
+        txtUPC.Text = String.Empty
+
+        txtUPC.Focus()
+
+    End Sub
+
+    Private Sub btnRemoveProduct_Click(sender As Object, e As EventArgs) Handles btnRemoveProduct.Click
+        'Removes the item from the cart
+        mlstCart.RemoveAt(lbxProducts.SelectedIndex)
+
+        lbxProducts.SelectedIndex = mlstCart.Count - 1
+
+        ''Update the current transaction based on the newly added product.
+        'mobjCurrentTransaction.Products.RemoveAt(lbxProducts.SelectedIndex)
+        'mobjCurrentTransaction.SubTotal -= lbxProducts.ProductPrice
+        'mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
+        'mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+
+        'lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
+        'lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
+        'lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+
+
+    End Sub
+
+    Private Sub btnVoidTransaction_Click(sender As Object, e As EventArgs) Handles btnVoidTransaction.Click
+
+        MessageBox.Show("Your transaction has been voided.")
+
+        'Voids the entire cart
+        mlstCart.Clear()
+
+        '
+        ' Temporary Code
+        '
+        'Sets the current transaction SubTotal, Tax, and Total to 0.00.
+        mobjCurrentTransaction.SubTotal = 0.00
+        mobjCurrentTransaction.Tax = 0.00
+        mobjCurrentTransaction.Total = 0.00
+
+        lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
+        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
+        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+
+        lblSelectedProduct.Text = String.Empty
+        lblSelectedPrice.Text = String.Empty
+        lblSelectedCategory.Text = String.Empty
+        lblSelectedDescription.Text = String.Empty
+
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
 
         'Closes the Point Of Sale Form.
         Me.Close()
+
+        'Shows the Login Form
+        frmLogin.Show()
     End Sub
+
+
 
     Private Sub LoadProducts()
 
@@ -161,4 +216,5 @@ Public Class frmPointOfSale
 
         Return dbConnection
     End Function
+
 End Class
