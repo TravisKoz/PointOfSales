@@ -239,7 +239,7 @@ Partial Class frmPointOfSale
         '
         'txtCash
         '
-        Me.txtCash.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCash.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCash.Location = New System.Drawing.Point(224, 516)
         Me.txtCash.Multiline = True
         Me.txtCash.Name = "txtCash"
@@ -278,7 +278,7 @@ Partial Class frmPointOfSale
         '
         'txtUPC
         '
-        Me.txtUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUPC.Location = New System.Drawing.Point(254, 37)
         Me.txtUPC.Multiline = True
         Me.txtUPC.Name = "txtUPC"
@@ -333,7 +333,7 @@ Partial Class frmPointOfSale
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "frmPointOfSale"
         Me.ShowInTaskbar = False
-        Me.Text = "frmPointOfSale"
+        Me.Text = "Point of Sale"
         Me.gbxSelectedProduct.ResumeLayout(False)
         Me.gbxSelectedProduct.PerformLayout()
         CType(Me.picProduct, System.ComponentModel.ISupportInitialize).EndInit()

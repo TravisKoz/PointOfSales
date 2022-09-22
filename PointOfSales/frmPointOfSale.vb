@@ -10,6 +10,7 @@ Imports System.Data.SqlClient
 
 Public Class frmPointOfSale
 
+#Region "Global Variables and Constants"
     'Define the form's global variables
     'Creates lists for our available products and the selected products.
     Dim mlstAvailableProducts As New List(Of ClsProduct)
@@ -18,7 +19,9 @@ Public Class frmPointOfSale
 
     'Define the form's constants
     Const TaxRate As Double = 0.05
+#End Region
 
+#Region "On Load"
     Private Sub frmPointOfSale_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'Loads the Products from the Database
@@ -29,16 +32,20 @@ Public Class frmPointOfSale
         lbxProducts.DisplayMember = "ProductName"
 
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
-        mobjCurrentTransaction.SubTotal = 0.00
-        mobjCurrentTransaction.Tax = 0.00
-        mobjCurrentTransaction.Total = 0.00
+        ResetTransaction()
 
         'Starts a list of products for our current transaction.
         mobjCurrentTransaction.Products = New List(Of ClsProduct)
 
+        RemoveProductDescription()
+
+        'Disables the Remove, Void, and Pay buttons on load.
+        ToggleButtonUse(False)
+
         'Starts the form out focused on the UPC text box.
         txtUPC.Focus()
     End Sub
+#End Region
 
     Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
         Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
@@ -53,6 +60,7 @@ Public Class frmPointOfSale
 
     End Sub
 
+#Region "Click Handlers"
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
         Dim intEnteredUPC As Integer
         Dim objSelectedProduct As New ClsProduct
@@ -76,7 +84,6 @@ Public Class frmPointOfSale
                 lbxProducts.SelectedIndex = -1
 
                 'Changes the product selected in the list box to the newly added product.
-
                 lbxProducts.SelectedIndex = mlstCart.Count - 1
 
                 'Update the current transaction based on the newly added product.
@@ -85,9 +92,11 @@ Public Class frmPointOfSale
                 mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
                 mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
 
-                lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
-                lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
-                lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+                'Updates displayed SubTotal, Tax, and Total
+                UpdateDisplayedTotals()
+
+                'Enables the remove, void, and pay buttons.
+                ToggleButtonUse(True)
             Else
                 'Entered UPC wasn't in the range of valid UPC's.
                 MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
@@ -102,52 +111,74 @@ Public Class frmPointOfSale
         txtUPC.Text = String.Empty
 
         txtUPC.Focus()
-
     End Sub
+#End Region
 
     Private Sub btnRemoveProduct_Click(sender As Object, e As EventArgs) Handles btnRemoveProduct.Click
+        Dim intCurrentSelectedProduct As Integer = lbxProducts.SelectedIndex
+        Dim strCurrentSelectedProductName As String = mlstCart.Item(intCurrentSelectedProduct).ProductName
+        Dim intNewSelectedProduct As Integer = intCurrentSelectedProduct - 1
+        Dim dblCurrentSelectedPrice As Double = mlstCart.ElementAt(intCurrentSelectedProduct).ProductPrice
+
+        'Update the current transaction based on the newly added product.
+        mobjCurrentTransaction.Products.RemoveAt(intCurrentSelectedProduct)
+        mobjCurrentTransaction.SubTotal -= dblCurrentSelectedPrice
+        mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
+        mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+
         'Removes the item from the cart
-        mlstCart.RemoveAt(lbxProducts.SelectedIndex)
+        mlstCart.RemoveAt(intCurrentSelectedProduct)
 
-        lbxProducts.SelectedIndex = mlstCart.Count - 1
+        If intNewSelectedProduct = -1 Then
+            'The first product in the cart was removed
 
-        ''Update the current transaction based on the newly added product.
-        'mobjCurrentTransaction.Products.RemoveAt(lbxProducts.SelectedIndex)
-        'mobjCurrentTransaction.SubTotal -= lbxProducts.ProductPrice
-        'mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
-        'mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+            'Allows the selected index to updated after the first item was removed
+            lbxProducts.SelectedIndex = -1
 
-        'lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
-        'lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
-        'lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+            lbxProducts.SelectedIndex = 0
+        Else
+            'Changes the selected item in the cart
+            lbxProducts.SelectedIndex = intNewSelectedProduct
+        End If
 
+        'If the cart is empty reset the product description
+        'to nothing and disable buttons.
+        If mlstCart.Count < 0 Then
+            RemoveProductDescription()
 
+            ToggleButtonUse(False)
+
+        End If
+
+        'Updates displayed SubTotal, Tax, and tax
+        UpdateDisplayedTotals()
+
+        MessageBox.Show(strCurrentSelectedProductName & "has been removed from your cart.")
     End Sub
 
     Private Sub btnVoidTransaction_Click(sender As Object, e As EventArgs) Handles btnVoidTransaction.Click
 
-        MessageBox.Show("Your transaction has been voided.")
-
         'Voids the entire cart
         mlstCart.Clear()
 
-        '
-        ' Temporary Code
-        '
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
-        mobjCurrentTransaction.SubTotal = 0.00
-        mobjCurrentTransaction.Tax = 0.00
-        mobjCurrentTransaction.Total = 0.00
+        ResetTransaction()
 
-        lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
-        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
-        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+        'Clears all products out of the current transaction
+        mobjCurrentTransaction.Products.Clear()
 
-        lblSelectedProduct.Text = String.Empty
-        lblSelectedPrice.Text = String.Empty
-        lblSelectedCategory.Text = String.Empty
-        lblSelectedDescription.Text = String.Empty
+        'Updates displayed SubTotal, Tax, and tax
+        UpdateDisplayedTotals()
 
+        'Resets Displayed Product Desription to Nothing
+        RemoveProductDescription()
+
+        'Disables the remove, void, and pay buttons
+        ToggleButtonUse(False)
+
+        'Displays a message letting the user know that
+        'the transaction has been void.
+        MessageBox.Show("Your transaction has been voided.")
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
@@ -157,10 +188,14 @@ Public Class frmPointOfSale
 
         'Shows the Login Form
         frmLogin.Show()
+
+        'Clears the previous username and password
+        'used to login.
+        frmLogin.txtUserName.Clear()
+        frmLogin.txtPassword.Clear()
     End Sub
 
-
-
+#Region "Database Functions"
     Private Sub LoadProducts()
 
         'Open the Products Database
@@ -193,6 +228,7 @@ Public Class frmPointOfSale
         dbConnection.Close()
         dbConnection.Dispose()
     End Sub
+#End Region
 
     Private Function OpenDBConnection() As SqlConnection
         'Create a connection string
@@ -217,4 +253,36 @@ Public Class frmPointOfSale
         Return dbConnection
     End Function
 
+#Region "Helper Functions"
+    Private Sub ResetTransaction()
+        'Sets the current transaction SubTotal, Tax, and Total to 0.00.
+        mobjCurrentTransaction.SubTotal = 0.00
+        mobjCurrentTransaction.Tax = 0.00
+        mobjCurrentTransaction.Total = 0.00
+
+    End Sub
+
+    Private Sub UpdateDisplayedTotals()
+        'Updates displayed SubTotal, Tax, and Total
+        lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
+        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
+        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+    End Sub
+
+    Private Sub RemoveProductDescription()
+        'Resets Displayed Product Desription to Nothing
+        lblSelectedProduct.Text = String.Empty
+        lblSelectedPrice.Text = String.Empty
+        lblSelectedCategory.Text = String.Empty
+        lblSelectedDescription.Text = String.Empty
+        'Add code to replace image source *********
+    End Sub
+
+    Private Sub ToggleButtonUse(ByVal blnEnabled As Boolean)
+        'Toggles buttons based on passed in boolean value
+        btnRemoveProduct.Enabled = blnEnabled
+        btnVoidTransaction.Enabled = blnEnabled
+        btnPay.Enabled = blnEnabled
+    End Sub
+#End Region
 End Class

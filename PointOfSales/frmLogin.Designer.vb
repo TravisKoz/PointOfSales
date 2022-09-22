@@ -95,7 +95,7 @@ Partial Class frmLogin
         Me.Controls.Add(Me.btnLogin)
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "frmLogin"
-        Me.Text = "Form1"
+        Me.Text = "Login"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
