@@ -134,8 +134,6 @@ Public Class frmPointOfSale
 
             'Allows the selected index to updated after the first item was removed
             lbxProducts.SelectedIndex = -1
-
-            lbxProducts.SelectedIndex = 0
         Else
             'Changes the selected item in the cart
             lbxProducts.SelectedIndex = intNewSelectedProduct
@@ -143,7 +141,7 @@ Public Class frmPointOfSale
 
         'If the cart is empty reset the product description
         'to nothing and disable buttons.
-        If mlstCart.Count < 0 Then
+        If mlstCart.Count <= 0 Then
             RemoveProductDescription()
 
             ToggleButtonUse(False)
@@ -153,7 +151,7 @@ Public Class frmPointOfSale
         'Updates displayed SubTotal, Tax, and tax
         UpdateDisplayedTotals()
 
-        MessageBox.Show(strCurrentSelectedProductName & "has been removed from your cart.")
+        MessageBox.Show(strCurrentSelectedProductName & " has been removed from your cart.")
     End Sub
 
     Private Sub btnVoidTransaction_Click(sender As Object, e As EventArgs) Handles btnVoidTransaction.Click
