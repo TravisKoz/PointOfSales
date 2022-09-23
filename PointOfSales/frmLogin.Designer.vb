@@ -79,6 +79,7 @@ Partial Class frmLogin
         Me.txtPassword.Margin = New System.Windows.Forms.Padding(1)
         Me.txtPassword.Multiline = True
         Me.txtPassword.Name = "txtPassword"
+        Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(259, 41)
         Me.txtPassword.TabIndex = 4
         '
