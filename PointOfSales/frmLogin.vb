@@ -34,7 +34,7 @@ Public Class frmLogin
                 'Navigates to the Point of Sale Form
                 frmSalesWindow.ShowDialog()
 
-                '  Else
+            Else
                 'The entered password doesn't match the password for the entered user
                 'Display Invalid Entry Message
                 MessageBox.Show("Invalid Username or Password! Please Try Again")
