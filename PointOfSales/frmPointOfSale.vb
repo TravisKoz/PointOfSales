@@ -7,6 +7,7 @@ Option Explicit On
 
 Imports System.ComponentModel
 Imports System.Data.SqlClient
+Imports System.IO
 
 Public Class frmPointOfSale
 
@@ -56,7 +57,14 @@ Public Class frmPointOfSale
             lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
             lblSelectedCategory.Text = objSelectedProduct.ProductCategory.ToString()
             lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
+
+            If File.Exists("./Images/" & objSelectedProduct.ProductName.ToString() & “.png") Then
+                picProduct.Image = Image.FromFile("./Images/" & objSelectedProduct.ProductName.ToString() & “.png")
+
+            End If
         End If
+
+
 
     End Sub
 

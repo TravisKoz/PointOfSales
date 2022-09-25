@@ -124,7 +124,7 @@ Partial Class frmPointOfSale
         '
         Me.lblSelectedCategory.AutoSize = True
         Me.lblSelectedCategory.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSelectedCategory.Location = New System.Drawing.Point(21, 253)
+        Me.lblSelectedCategory.Location = New System.Drawing.Point(24, 289)
         Me.lblSelectedCategory.Name = "lblSelectedCategory"
         Me.lblSelectedCategory.Size = New System.Drawing.Size(83, 22)
         Me.lblSelectedCategory.TabIndex = 4
@@ -143,9 +143,9 @@ Partial Class frmPointOfSale
         'lblSelectedDescription
         '
         Me.lblSelectedDescription.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSelectedDescription.Location = New System.Drawing.Point(22, 290)
+        Me.lblSelectedDescription.Location = New System.Drawing.Point(22, 311)
         Me.lblSelectedDescription.Name = "lblSelectedDescription"
-        Me.lblSelectedDescription.Size = New System.Drawing.Size(327, 187)
+        Me.lblSelectedDescription.Size = New System.Drawing.Size(327, 156)
         Me.lblSelectedDescription.TabIndex = 2
         Me.lblSelectedDescription.Text = "Description"
         '
@@ -163,7 +163,8 @@ Partial Class frmPointOfSale
         '
         Me.picProduct.Location = New System.Drawing.Point(28, 100)
         Me.picProduct.Name = "picProduct"
-        Me.picProduct.Size = New System.Drawing.Size(321, 145)
+        Me.picProduct.Size = New System.Drawing.Size(321, 186)
+        Me.picProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.picProduct.TabIndex = 0
         Me.picProduct.TabStop = False
         '
