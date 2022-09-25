@@ -162,6 +162,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\images\Bacon.png" />
+    <Content Include="bin\Debug\images\Barstool set.png" />
+    <Content Include="bin\Debug\images\Book Shelf.png" />
+    <Content Include="bin\Debug\images\Bowling Set.png" />
+    <Content Include="bin\Debug\images\Cereal.png" />
+    <Content Include="bin\Debug\images\Coffee Table.png" />
+    <Content Include="bin\Debug\images\Cube Storage.png" />
+    <Content Include="bin\Debug\images\Dart Gun.png" />
+    <Content Include="bin\Debug\images\Gaming Headset.png" />
+    <Content Include="bin\Debug\images\Jenga.png" />
+    <Content Include="bin\Debug\images\Milk.png" />
+    <Content Include="bin\Debug\images\Muffins.png" />
+    <Content Include="bin\Debug\images\Mystery Capsule.png" />
+    <Content Include="bin\Debug\images\Nintendo Switch.png" />
+    <Content Include="bin\Debug\images\Roku.png" />
+    <Content Include="bin\Debug\images\Table Lamp.png" />
+    <Content Include="bin\Debug\images\TV.png" />
+    <Content Include="bin\Debug\images\Uno.png" />
+    <Content Include="bin\Debug\images\White Rice.png" />
+    <Content Include="bin\Debug\images\Xbox Controller.png" />
     <Content Include="dboProducts.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
