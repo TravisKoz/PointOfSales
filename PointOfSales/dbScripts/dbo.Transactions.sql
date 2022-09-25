@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS [dbo].[Transactions]
 -- Create the table Transactions
 CREATE TABLE [dbo].[Transactions]
 (
-	[TransactionID] INT NOT NULL PRIMARY KEY, 
+	[TransactionID] INT IDENTITY (1, 1) NOT NULL, 
     [Total] DECIMAL(18, 2) NULL, 
     [Subtotal] DECIMAL(18, 2) NULL, 
     [Tax] DECIMAL(18, 2) NULL

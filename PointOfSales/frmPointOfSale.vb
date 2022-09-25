@@ -48,6 +48,7 @@ Public Class frmPointOfSale
     End Sub
 #End Region
 
+#Region "Selected Index Changed"
     Private Sub lbxProducts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbxProducts.SelectedIndexChanged
         Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
 
@@ -63,10 +64,9 @@ Public Class frmPointOfSale
 
             End If
         End If
-
-
-
     End Sub
+
+#End Region
 
 #Region "Click Handlers"
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
@@ -120,7 +120,6 @@ Public Class frmPointOfSale
 
         txtUPC.Focus()
     End Sub
-#End Region
 
     Private Sub btnRemoveProduct_Click(sender As Object, e As EventArgs) Handles btnRemoveProduct.Click
         Dim intCurrentSelectedProduct As Integer = lbxProducts.SelectedIndex
@@ -187,6 +186,20 @@ Public Class frmPointOfSale
         MessageBox.Show("Your transaction has been voided.")
     End Sub
 
+    Private Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
+
+        Dim dbConnection As SqlConnection = OpenDBConnection()
+
+        'Create a Command Object
+        Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Total, Subtotal, Tax) values(" & mobjCurrentTransaction.Total & "," & mobjCurrentTransaction.SubTotal & "," & mobjCurrentTransaction.Tax & ");", dbConnection)
+
+        cmdInsert.ExecuteReader()
+
+        dbConnection.Close()
+
+        dbConnection.Dispose()
+    End Sub
+
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
 
         'Closes the Point Of Sale Form.
@@ -200,6 +213,7 @@ Public Class frmPointOfSale
         frmLogin.txtUserName.Clear()
         frmLogin.txtPassword.Clear()
     End Sub
+#End Region
 
 #Region "Database Functions"
     Private Sub LoadProducts()
@@ -234,7 +248,6 @@ Public Class frmPointOfSale
         dbConnection.Close()
         dbConnection.Dispose()
     End Sub
-#End Region
 
     Private Function OpenDBConnection() As SqlConnection
         'Create a connection string
@@ -258,6 +271,7 @@ Public Class frmPointOfSale
 
         Return dbConnection
     End Function
+#End Region
 
 #Region "Helper Functions"
     Private Sub ResetTransaction()
@@ -292,3 +306,5 @@ Public Class frmPointOfSale
     End Sub
 #End Region
 End Class
+
+
