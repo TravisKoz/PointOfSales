@@ -169,6 +169,26 @@
     </Content>
     <Content Include="dbScripts\dbo.Products.sql" />
     <Content Include="dbScripts\dbo.Users.sql" />
+    <Content Include="productPictures\baconThickSlide.png" />
+    <Content Include="productPictures\bookShelf.png" />
+    <Content Include="productPictures\bowlingSet.png" />
+    <Content Include="productPictures\capnCrunch.png" />
+    <Content Include="productPictures\coffeeTable.png" />
+    <Content Include="productPictures\counerStool.png" />
+    <Content Include="productPictures\cubeStorage.png" />
+    <Content Include="productPictures\dartgun.png" />
+    <Content Include="productPictures\gamingHeadset.png" />
+    <Content Include="productPictures\jenga.png" />
+    <Content Include="productPictures\lampTable.png" />
+    <Content Include="productPictures\miniBrands.png" />
+    <Content Include="productPictures\muffinsLemon.png" />
+    <Content Include="productPictures\nintendoSwitch.png" />
+    <Content Include="productPictures\riceLongRice.png" />
+    <Content Include="productPictures\rokuExpress.png" />
+    <Content Include="productPictures\tvSamsung55.png" />
+    <Content Include="productPictures\unoCardgame.png" />
+    <Content Include="productPictures\wholeMillk.png" />
+    <Content Include="productPictures\xboxControler.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
