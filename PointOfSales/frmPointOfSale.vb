@@ -61,6 +61,8 @@ Public Class frmPointOfSale
 
             If File.Exists("./Images/" & objSelectedProduct.ProductName.ToString() & “.png") Then
                 picProduct.Image = Image.FromFile("./Images/" & objSelectedProduct.ProductName.ToString() & “.png")
+            Else
+                picProduct.Image = Image.FromFile("./Images/No image.png")
 
             End If
         End If
