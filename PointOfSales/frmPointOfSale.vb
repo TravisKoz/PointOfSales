@@ -297,7 +297,7 @@ Public Class frmPointOfSale
         lblSelectedPrice.Text = String.Empty
         lblSelectedCategory.Text = String.Empty
         lblSelectedDescription.Text = String.Empty
-        'Add code to replace image source *********
+        picProduct.Image = Nothing
     End Sub
 
     Private Sub ToggleButtonUse(ByVal blnEnabled As Boolean)
