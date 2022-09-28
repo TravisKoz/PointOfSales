@@ -107,6 +107,9 @@ Public Class frmPointOfSale
 
                 'Enables the remove, void, and pay buttons.
                 ToggleButtonUse(True)
+
+                'Changes the change label back to zero if starting a new transaction.
+                lblChangeAmount.Text = ("$0.00")
             Else
                 'Entered UPC wasn't in the range of valid UPC's.
                 MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
@@ -190,16 +193,44 @@ Public Class frmPointOfSale
 
     Private Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
 
-        Dim dbConnection As SqlConnection = OpenDBConnection()
+        'Cash given variables
+        Dim dblPayedCash As Double
+        Dim blnIsValidIdDouble = Double.TryParse(txtCash.Text, dblPayedCash)
 
-        'Create a Command Object
-        Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Total, Subtotal, Tax) values(" & mobjCurrentTransaction.Total & "," & mobjCurrentTransaction.SubTotal & "," & mobjCurrentTransaction.Tax & ");", dbConnection)
+        If blnIsValidIdDouble Then
+            'The entered cash value is a double.
+            If dblPayedCash >= mobjCurrentTransaction.Total Then
 
-        cmdInsert.ExecuteReader()
+                Dim dbConnection As SqlConnection = OpenDBConnection()
 
-        dbConnection.Close()
+                'Create a Command Object
+                Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Total, Subtotal, Tax) values(" & mobjCurrentTransaction.Total & "," & mobjCurrentTransaction.SubTotal & "," & mobjCurrentTransaction.Tax & ");", dbConnection)
 
-        dbConnection.Dispose()
+                cmdInsert.ExecuteReader()
+
+                dbConnection.Close()
+                dbConnection.Dispose()
+
+                'Change the displayed change.
+                lblChangeAmount.Text = (dblPayedCash - mobjCurrentTransaction.Total).ToString("C")
+
+                'Start a new transaction
+                ResetTransaction()
+                RemoveProductDescription()
+                UpdateDisplayedTotals()
+                mobjCurrentTransaction.Products.Clear()
+                mlstCart.Clear()
+
+                txtCash.Text = ""
+            Else
+
+                MessageBox.Show("Insufficient Funds")
+            End If
+
+        Else
+            MessageBox.Show("Please enter a valid cash amount.")
+        End If
+
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
