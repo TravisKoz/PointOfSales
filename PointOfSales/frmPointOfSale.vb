@@ -59,10 +59,10 @@ Public Class frmPointOfSale
             lblSelectedCategory.Text = objSelectedProduct.ProductCategory.ToString()
             lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
 
-            If File.Exists("./Images/" & objSelectedProduct.ProductName.ToString() & “.png") Then
-                picProduct.Image = Image.FromFile("./Images/" & objSelectedProduct.ProductName.ToString() & “.png")
+            If File.Exists("../../Images/" & objSelectedProduct.ProductName.ToString() & “.png") Then
+                picProduct.Image = Image.FromFile("../../Images/" & objSelectedProduct.ProductName.ToString() & “.png")
             Else
-                picProduct.Image = Image.FromFile("./Images/No image.png")
+                picProduct.Image = Image.FromFile("../../Images/No image.png")
 
             End If
         End If
