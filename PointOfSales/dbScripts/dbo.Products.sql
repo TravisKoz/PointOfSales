@@ -51,5 +51,7 @@ INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (33, N'Booster Cables Set', CAST(20.00 AS Decimal(18, 2)), N'EverStart Travel Pro Safety Kit, Emergency, Roadside Assistance, Booster Cables', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (34, N'Car Care Kit', CAST(13.38 AS Decimal(18, 2)), N'Armor All Complete Car Care Kit (4 Pieces), Car Cleaning', N'Auto')
 INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (35, N'Wiper Blades 22', CAST(24.53 AS Decimal(18, 2)), N'TRICO Gold 2 Pack All Weather Automotive Replacement Wiper Blades 22 and 22 Inch (18-2222)', N'Auto')
+INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (36, N'Johnie Walker', CAST(35.98 AS Decimal(18, 2)), N'Johnnie Walker Black Label Blended Scotch Whisky, 750 mL, 40% ABV', N'Alcohol')
+INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department]) VALUES (37, N'Marlboro', CAST(26.00 AS Decimal(18, 2)), N'Marlboro 100s Box cigarettes, 1 carton', N'Tobacco')
 SET IDENTITY_INSERT [dbo].[Products] OFF
 
