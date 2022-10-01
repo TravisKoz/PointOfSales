@@ -337,6 +337,23 @@ Public Class frmPointOfSale
         btnVoidTransaction.Enabled = blnEnabled
         btnPay.Enabled = blnEnabled
     End Sub
+
+    Private Sub txtUPC_TextChanged(sender As Object, e As EventArgs) Handles txtUPC.TextChanged
+
+    End Sub
+
+    ' Funtion the adds products by presing the return/enter key
+    Private Sub txtUPC_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUPC.KeyDown
+
+        If e.KeyCode = Keys.Enter Then
+            btnAddProduct_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+
+        e.SuppressKeyPress = True
+
+    End Sub
 #End Region
 End Class
 
