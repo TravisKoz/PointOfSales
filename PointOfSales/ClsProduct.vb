@@ -11,6 +11,8 @@ Public Class ClsProduct
     Private mdblProductPrice As Double
     Private mstrProductDescription As String
     Private mstrProductCategory As String
+    Private mblnPayByWeight As Boolean
+    Private mdblPricePerPound As Double
 
     'Define class properties
     Public Property CodeUPC As Integer
@@ -55,6 +57,24 @@ Public Class ClsProduct
         End Get
         Set(value As String)
             mstrProductCategory = value
+        End Set
+    End Property
+
+    Public Property PayByWeight As Boolean
+        Get
+            Return mblnPayByWeight
+        End Get
+        Set(value As Boolean)
+            mblnPayByWeight = value
+        End Set
+    End Property
+
+    Public Property PricePerPound As Double
+        Get
+            Return mdblPricePerPound
+        End Get
+        Set(value As Double)
+            mdblPricePerPound = value
         End Set
     End Property
 End Class

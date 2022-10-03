@@ -74,6 +74,7 @@ Public Class frmPointOfSale
     Private Sub btnAddProduct_Click(sender As Object, e As EventArgs) Handles btnAddProduct.Click
         Dim intEnteredUPC As Integer
         Dim objSelectedProduct As New ClsProduct
+        Dim blnIsValidWeight As Boolean = True
 
         Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
 
@@ -87,43 +88,70 @@ Public Class frmPointOfSale
                                                                     Return intEnteredUPC = value.CodeUPC
                                                                 End Function)
 
-                'Adds the Selected product to our list of selected products.
-                mlstCart.Add(objSelectedProduct)
+                If objSelectedProduct.PayByWeight = True Then
+                    Dim dblEnteredWeight As Double = 0.00
 
-                'Allows the selected index to update when the first Product is added to the cart.
-                lbxProducts.SelectedIndex = -1
+                    blnIsValidWeight = Double.TryParse(txtProductWeight.Text, dblEnteredWeight)
 
-                'Changes the product selected in the list box to the newly added product.
-                lbxProducts.SelectedIndex = mlstCart.Count - 1
+                    If blnIsValidWeight = False Then
+                        MessageBox.Show("Please enter a valid weight for this product")
 
-                'Update the current transaction based on the newly added product.
-                mobjCurrentTransaction.Products.Add(objSelectedProduct)
-                mobjCurrentTransaction.SubTotal += objSelectedProduct.ProductPrice
-                mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
-                mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+                    Else
+                        objSelectedProduct.ProductPrice = dblEnteredWeight * objSelectedProduct.PricePerPound
 
-                'Updates displayed SubTotal, Tax, and Total
-                UpdateDisplayedTotals()
+                    End If
 
-                'Enables the remove, void, and pay buttons.
-                ToggleButtonUse(True)
+                End If
 
-                'Changes the change label back to zero if starting a new transaction.
-                lblChangeAmount.Text = ("$0.00")
+                If blnIsValidWeight = True Then
+
+                    'Adds the Selected product to our list of selected products.
+                    mlstCart.Add(objSelectedProduct)
+
+                    'Allows the selected index to update when the first Product is added to the cart.
+                    lbxProducts.SelectedIndex = -1
+
+                    'Changes the product selected in the list box to the newly added product.
+                    lbxProducts.SelectedIndex = mlstCart.Count - 1
+
+                    'Update the current transaction based on the newly added product.
+                    mobjCurrentTransaction.Products.Add(objSelectedProduct)
+                    mobjCurrentTransaction.SubTotal += objSelectedProduct.ProductPrice
+                    mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
+                    mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+
+                    'Updates displayed SubTotal, Tax, and Total
+                    UpdateDisplayedTotals()
+
+                    'Enables the remove, void, and pay buttons.
+                    ToggleButtonUse(True)
+
+                    'Changes the change label back to zero if starting a new transaction.
+                    lblChangeAmount.Text = ("$0.00")
+
+                End If
+
             Else
+
+
                 'Entered UPC wasn't in the range of valid UPC's.
                 MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
+
             End If
+
+            'After an item is added put focus and empty the UPC text box
+            txtUPC.Text = String.Empty
+
+            txtUPC.Focus()
+
 
         Else
             'UPC entered wasn't an integer.
             MessageBox.Show("UPC must be an integer value. Please try again.")
+
         End If
 
-        'After an item is added put focus and empty the UPC text box
-        txtUPC.Text = String.Empty
 
-        txtUPC.Focus()
     End Sub
 
     Private Sub btnRemoveProduct_Click(sender As Object, e As EventArgs) Handles btnRemoveProduct.Click
@@ -270,7 +298,9 @@ Public Class frmPointOfSale
                 objStoredProduct.ProductName = rdrProduct.Item("Name").ToString()
                 objStoredProduct.ProductPrice = CDbl(rdrProduct.Item("Price"))
                 objStoredProduct.ProductDescription = rdrProduct.Item("Description").ToString()
-                objStoredProduct.ProductCategory = rdrProduct.Item("Department").ToString
+                objStoredProduct.ProductCategory = rdrProduct.Item("Department").ToString()
+                objStoredProduct.PayByWeight = CType(rdrProduct.Item("PayByWeight"), Boolean)
+                objStoredProduct.PricePerPound = CDbl(rdrProduct.Item("PricePerPound"))
 
                 'Adds the stored product to the list of available products.
                 mlstAvailableProducts.Add(objStoredProduct)
