@@ -75,6 +75,7 @@ Public Class frmPointOfSale
         Dim intEnteredUPC As Integer
         Dim objSelectedProduct As New ClsProduct
         Dim blnIsValidWeight As Boolean = True
+        Dim blnIsUnderAge As Boolean = False
 
         Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
 
@@ -103,7 +104,17 @@ Public Class frmPointOfSale
 
                 End If
 
-                If blnIsValidWeight = True Then
+                If objSelectedProduct.IsRestricted = True Then
+                    Dim dteDateOfBirth As Date = dtDoB.Value
+                    Dim TwentyFirstBirthday As Date = dteDateOfBirth.AddYears(21)
+
+                    If Date.Now < TwentyFirstBirthday Then
+                        blnIsUnderAge = True
+                        MessageBox.Show("Customer is underage.")
+                    End If
+                End If
+
+                If blnIsValidWeight = True And blnIsUnderAge = False Then
 
                     'Adds the Selected product to our list of selected products.
                     mlstCart.Add(objSelectedProduct)
@@ -134,8 +145,8 @@ Public Class frmPointOfSale
             Else
 
 
-                'Entered UPC wasn't in the range of valid UPC's.
-                MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
+                    'Entered UPC wasn't in the range of valid UPC's.
+                    MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
 
             End If
 
@@ -301,6 +312,8 @@ Public Class frmPointOfSale
                 objStoredProduct.ProductCategory = rdrProduct.Item("Department").ToString()
                 objStoredProduct.PayByWeight = CType(rdrProduct.Item("PayByWeight"), Boolean)
                 objStoredProduct.PricePerPound = CDbl(rdrProduct.Item("PricePerPound"))
+                objStoredProduct.IsRestricted = CType(rdrProduct.Item("IsRestricted"), Boolean)
+
 
                 'Adds the stored product to the list of available products.
                 mlstAvailableProducts.Add(objStoredProduct)
@@ -384,6 +397,8 @@ Public Class frmPointOfSale
         e.SuppressKeyPress = True
 
     End Sub
+
+
 #End Region
 End Class
 

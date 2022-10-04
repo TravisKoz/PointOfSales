@@ -13,6 +13,8 @@ Public Class ClsProduct
     Private mstrProductCategory As String
     Private mblnPayByWeight As Boolean
     Private mdblPricePerPound As Double
+    Private mblnIsRestricted As Boolean
+
 
     'Define class properties
     Public Property CodeUPC As Integer
@@ -77,4 +79,14 @@ Public Class ClsProduct
             mdblPricePerPound = value
         End Set
     End Property
+
+    Public Property IsRestricted As Boolean
+        Get
+            Return mblnIsRestricted
+        End Get
+        Set(value As Boolean)
+            mblnIsRestricted = value
+        End Set
+    End Property
+
 End Class
