@@ -263,7 +263,10 @@ Public Class frmPointOfSale
                 txtCash.Text = ""
             Else
 
-                MessageBox.Show("Insufficient Funds")
+                mobjCurrentTransaction.Total -= dblPayedCash
+                lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+
+                MessageBox.Show("You payed " & dblPayedCash.ToString("C") & ". Remaining amount is " & mobjCurrentTransaction.Total.ToString("C") & ".")
             End If
 
         Else
