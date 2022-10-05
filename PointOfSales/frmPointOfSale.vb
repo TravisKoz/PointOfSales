@@ -236,6 +236,8 @@ Public Class frmPointOfSale
         Dim dblPayedCash As Double
         Dim blnIsValidIdDouble = Double.TryParse(txtCash.Text, dblPayedCash)
 
+        CouponCode(dblPayedCash)
+
         If blnIsValidIdDouble Then
             'The entered cash value is a double.
             If dblPayedCash >= mobjCurrentTransaction.Total Then
@@ -400,6 +402,30 @@ Public Class frmPointOfSale
         e.SuppressKeyPress = True
 
     End Sub
+
+    ' Function to ask for coupon code
+    Function CouponCode(dblPayedCash As Double) As Double
+
+        Dim dblNewPayedCash As Double
+        Dim couponCodeForm As String
+
+        couponCodeForm = InputBox("Do you have a coupon code?")
+
+        If Integer.Parse(couponCodeForm) = 0 Then
+            ' Cancel buttton clicked, so do nothing
+            dblNewPayedCash = dblPayedCash
+        ElseIf couponCodeForm = "" Then
+            ' Okay clicked, but no value was entered, so do nothing
+            dblNewPayedCash = dblPayedCash
+        Else
+            Select Case couponCodeForm
+                Case "testCode1"
+                    dblNewPayedCash = dblPayedCash * 0.5
+            End Select
+        End If
+
+        Return dblNewPayedCash
+    End Function
 
 
 #End Region
