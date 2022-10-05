@@ -55,6 +55,6 @@
         INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department], [PayByWeight], [PricePerPound], [IsRestricted]) VALUES (35, N'Wiper Blades 22', CAST(24.53 AS Decimal(18, 2)), N'TRICO Gold 2 Pack All Weather Automotive Replacement Wiper Blades 22 and 22 Inch (18-2222)', N'Auto', CAST(0 AS bit), 0.00, CAST(0 AS bit))
         INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department], [PayByWeight], [PricePerPound], [IsRestricted]) VALUES (36, N'Johnie Walker', CAST(35.98 AS Decimal(18, 2)), N'Johnnie Walker Black Label Blended Scotch Whisky, 750 mL, 40% ABV', N'Alcohol', CAST(0 AS bit), 0.00, CAST(1 AS bit))
         INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department], [PayByWeight], [PricePerPound], [IsRestricted]) VALUES (37, N'Marlboro', CAST(26.00 AS Decimal(18, 2)), N'Marlboro 100s Box cigarettes, 1 carton', N'Tobacco', CAST(0 AS bit), 0.00, CAST(1 AS bit))
-        INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department], [PayByWeight], [PricePerPound], [IsRestricted]) VALUES (38, N'Bananas', CAST(0.00 AS Decimal(18, 2)), N'Bundle of bananas sold by the pound, 1', N'Grocery', CAST(1 AS bit), 0.58, CAST(0 AS bit))
+        INSERT INTO [dbo].[Products] ([UPC], [Name], [Price], [Description], [Department], [PayByWeight], [PricePerPound], [IsRestricted]) VALUES (38, N'Bananas', CAST(0.00 AS Decimal(18, 2)), N'Bundle of bananas sold by the pound,', N'Grocery', CAST(1 AS bit), 0.58, CAST(0 AS bit))
         SET IDENTITY_INSERT [dbo].[Products] OFF
 

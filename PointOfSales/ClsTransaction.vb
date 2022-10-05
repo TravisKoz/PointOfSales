@@ -8,17 +8,28 @@ Option Explicit On
 Public Class ClsTransaction
 
     'Define Class Level Fields
-    Private mlstProducts As List(Of ClsProduct)
+    Private mintTransactionID As Integer
+    Private mlstProducts As Dictionary(Of ClsProduct, Integer)
     Private mdblSubTotal As Double
     Private mdblTax As Double
     Private mdblTotal As Double
+    Private mdteTime As Date
+
+    Public Property TransactionID As Integer
+        Get
+            Return mintTransactionID
+        End Get
+        Set(value As Integer)
+            mintTransactionID = value
+        End Set
+    End Property
 
     'Define Class Properties
-    Public Property Products As List(Of ClsProduct)
+    Public Property Products As Dictionary(Of ClsProduct, Integer)
         Get
             Return mlstProducts
         End Get
-        Set(value As List(Of ClsProduct))
+        Set(value As Dictionary(Of ClsProduct, Integer))
             mlstProducts = value
         End Set
     End Property
@@ -49,4 +60,31 @@ Public Class ClsTransaction
             mdblTotal = value
         End Set
     End Property
+
+    Public Property Time As Date
+        Get
+            Return mdteTime
+        End Get
+        Set(value As Date)
+            mdteTime = value
+        End Set
+    End Property
+
+    Private Function CalculateSubTotal() As Double
+        Dim result As Double
+
+        For Each pair As KeyValuePair(Of ClsProduct, Integer) In mlstProducts
+            Dim product As ClsProduct = pair.Key
+            Dim qty As Integer = pair.Value
+
+            result += product.ProductPrice * qty
+
+        Next
+
+        Return result
+    End Function
+
+    Private Function CalculateTax() As Double
+        Return CalculateSubTotal() * 0.05
+    End Function
 End Class
