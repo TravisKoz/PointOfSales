@@ -234,13 +234,20 @@ Public Class frmPointOfSale
 
         'Cash given variables
         Dim dblPayedCash As Double
+        Dim dblDiscount As Double
         Dim blnIsValidIdDouble = Double.TryParse(txtCash.Text, dblPayedCash)
-
-        CouponCode(dblPayedCash)
 
         If blnIsValidIdDouble Then
             'The entered cash value is a double.
             If dblPayedCash >= mobjCurrentTransaction.Total Then
+
+                ' Coupon code is  promted then saved as a discount
+                dblDiscount = CouponCode()
+
+                ' Dicount is applied
+                mobjCurrentTransaction.Total = mobjCurrentTransaction.Total * dblDiscount
+                mobjCurrentTransaction.SubTotal = mobjCurrentTransaction.SubTotal * dblDiscount
+                mobjCurrentTransaction.Tax = mobjCurrentTransaction.Tax * dblDiscount
 
                 Dim dbConnection As SqlConnection = OpenDBConnection()
 
@@ -404,27 +411,26 @@ Public Class frmPointOfSale
     End Sub
 
     ' Function to ask for coupon code
-    Function CouponCode(dblPayedCash As Double) As Double
+    Function CouponCode() As Double
 
-        Dim dblNewPayedCash As Double
+        Dim dblDiscount As Double
         Dim couponCodeForm As String
 
         couponCodeForm = InputBox("Do you have a coupon code?")
 
-        If Integer.Parse(couponCodeForm) = 0 Then
-            ' Cancel buttton clicked, so do nothing
-            dblNewPayedCash = dblPayedCash
-        ElseIf couponCodeForm = "" Then
+        If couponCodeForm = "" Then
             ' Okay clicked, but no value was entered, so do nothing
-            dblNewPayedCash = dblPayedCash
+            dblDiscount = 1
         Else
             Select Case couponCodeForm
                 Case "testCode1"
-                    dblNewPayedCash = dblPayedCash * 0.5
+                    dblDiscount = 0.5
+                Case "testCode1"
+                    dblDiscount = 0.25
             End Select
         End If
 
-        Return dblNewPayedCash
+        Return dblDiscount
     End Function
 
 
