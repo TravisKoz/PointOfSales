@@ -32,11 +32,12 @@ Public Class frmPointOfSale
         lbxProducts.DataSource = mlstCart
         lbxProducts.DisplayMember = "ProductName"
 
+        'Don't think we need anymore
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
-        ResetTransaction()
+        'ResetTransaction()
 
         'Starts a list of products for our current transaction.
-        mobjCurrentTransaction.Products = New List(Of ClsProduct)
+        mobjCurrentTransaction.Products = New Dictionary(Of ClsProduct, Integer)
 
         RemoveProductDescription()
 
@@ -126,10 +127,7 @@ Public Class frmPointOfSale
                     lbxProducts.SelectedIndex = mlstCart.Count - 1
 
                     'Update the current transaction based on the newly added product.
-                    mobjCurrentTransaction.Products.Add(objSelectedProduct)
-                    mobjCurrentTransaction.SubTotal += objSelectedProduct.ProductPrice
-                    mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
-                    mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+                    mobjCurrentTransaction.Products.Add(objSelectedProduct, 1)
 
                     'Updates displayed SubTotal, Tax, and Total
                     UpdateDisplayedTotals()
@@ -167,15 +165,13 @@ Public Class frmPointOfSale
 
     Private Sub btnRemoveProduct_Click(sender As Object, e As EventArgs) Handles btnRemoveProduct.Click
         Dim intCurrentSelectedProduct As Integer = lbxProducts.SelectedIndex
+        Dim objSelectedProduct As ClsProduct = CType(lbxProducts.SelectedItem, ClsProduct)
         Dim strCurrentSelectedProductName As String = mlstCart.Item(intCurrentSelectedProduct).ProductName
         Dim intNewSelectedProduct As Integer = intCurrentSelectedProduct - 1
         Dim dblCurrentSelectedPrice As Double = mlstCart.ElementAt(intCurrentSelectedProduct).ProductPrice
 
         'Update the current transaction based on the newly added product.
-        mobjCurrentTransaction.Products.RemoveAt(intCurrentSelectedProduct)
-        mobjCurrentTransaction.SubTotal -= dblCurrentSelectedPrice
-        mobjCurrentTransaction.Tax = mobjCurrentTransaction.SubTotal * TaxRate
-        mobjCurrentTransaction.Total = mobjCurrentTransaction.SubTotal + mobjCurrentTransaction.Tax
+        mobjCurrentTransaction.Products.Remove(objSelectedProduct)
 
         'Removes the item from the cart
         mlstCart.RemoveAt(intCurrentSelectedProduct)
@@ -210,8 +206,9 @@ Public Class frmPointOfSale
         'Voids the entire cart
         mlstCart.Clear()
 
+        'Don't Think we need anymore
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
-        ResetTransaction()
+        'ResetTransaction()
 
         'Clears all products out of the current transaction
         mobjCurrentTransaction.Products.Clear()
@@ -239,20 +236,24 @@ Public Class frmPointOfSale
 
         If blnIsValidIdDouble Then
             'The entered cash value is a double.
-            If dblPayedCash >= mobjCurrentTransaction.Total Then
+            If dblPayedCash >= mobjCurrentTransaction.CalculateTotal() Then
 
                 ' Coupon code is  promted then saved as a discount
-                dblDiscount = CouponCode()
+                'dblDiscount = CouponCode()
 
                 ' Dicount is applied
-                mobjCurrentTransaction.Total = mobjCurrentTransaction.Total * dblDiscount
-                mobjCurrentTransaction.SubTotal = mobjCurrentTransaction.SubTotal * dblDiscount
-                mobjCurrentTransaction.Tax = mobjCurrentTransaction.Tax * dblDiscount
+                'mobjCurrentTransaction.Total = mobjCurrentTransaction.Total * dblDiscount
+                ' mobjCurrentTransaction.SubTotal = mobjCurrentTransaction.SubTotal * dblDiscount
+                'mobjCurrentTransaction.Tax = mobjCurrentTransaction.Tax * dblDiscount
 
                 Dim dbConnection As SqlConnection = OpenDBConnection()
 
                 'Create a Command Object
-                Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Total, Subtotal, Tax) values(" & mobjCurrentTransaction.Total & "," & mobjCurrentTransaction.SubTotal & "," & mobjCurrentTransaction.Tax & ");", dbConnection)
+                Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Time) values('" & Date.Now & "');", dbConnection)
+
+
+                MessageBox.Show(cmdInsert.CommandText)
+
 
                 cmdInsert.ExecuteReader()
 
@@ -260,10 +261,10 @@ Public Class frmPointOfSale
                 dbConnection.Dispose()
 
                 'Change the displayed change.
-                lblChangeAmount.Text = (dblPayedCash - mobjCurrentTransaction.Total).ToString("C")
+                lblChangeAmount.Text = (dblPayedCash - mobjCurrentTransaction.CalculateTotal()).ToString("C")
 
                 'Start a new transaction
-                ResetTransaction()
+                ResetAmounts()
                 RemoveProductDescription()
                 UpdateDisplayedTotals()
                 mobjCurrentTransaction.Products.Clear()
@@ -272,10 +273,7 @@ Public Class frmPointOfSale
                 txtCash.Text = ""
             Else
 
-                mobjCurrentTransaction.Total -= dblPayedCash
-                lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
-
-                MessageBox.Show("You payed " & dblPayedCash.ToString("C") & ". Remaining amount is " & mobjCurrentTransaction.Total.ToString("C") & ".")
+                MessageBox.Show("Insufficient Funds")
             End If
 
         Else
@@ -362,19 +360,21 @@ Public Class frmPointOfSale
 #End Region
 
 #Region "Helper Functions"
-    Private Sub ResetTransaction()
+
+    ' Don't think we need this anymore
+    Private Sub ResetAmounts()
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
-        mobjCurrentTransaction.SubTotal = 0.00
-        mobjCurrentTransaction.Tax = 0.00
-        mobjCurrentTransaction.Total = 0.00
+        lblSubTotalAmount.Text = "$0.00"
+        lblTaxAmount.Text = "$0.00"
+        lblTotalAmount.Text = "$0.00"
 
     End Sub
 
     Private Sub UpdateDisplayedTotals()
         'Updates displayed SubTotal, Tax, and Total
-        lblSubTotalAmount.Text = mobjCurrentTransaction.SubTotal.ToString("C")
-        lblTaxAmount.Text = mobjCurrentTransaction.Tax.ToString("C")
-        lblTotalAmount.Text = mobjCurrentTransaction.Total.ToString("C")
+        lblSubTotalAmount.Text = mobjCurrentTransaction.CalculateSubTotal().ToString("C")
+        lblTaxAmount.Text = mobjCurrentTransaction.CalculateTax.ToString("C")
+        lblTotalAmount.Text = mobjCurrentTransaction.CalculateTotal.ToString("C")
     End Sub
 
     Private Sub RemoveProductDescription()

@@ -6,7 +6,7 @@ Option Explicit On
 Public Class ClsProduct
 
     'Define class fields
-    Private mintCodeUPC As Integer
+    Private mintCodeUPC As Integer 'This is our productID
     Private mstrProductName As String
     Private mdblProductPrice As Double
     Private mstrProductDescription As String
