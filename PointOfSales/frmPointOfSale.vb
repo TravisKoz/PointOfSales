@@ -18,6 +18,9 @@ Public Class frmPointOfSale
     Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
 
+    Dim intEnteredQty As Integer
+
+
     'Define the form's constants
     Const TaxRate As Double = 0.05
 #End Region
@@ -78,85 +81,115 @@ Public Class frmPointOfSale
         Dim blnIsValidWeight As Boolean = True
         Dim blnIsUnderAge As Boolean = False
 
+
         Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
+        Dim blnIsValidIdIntegerQty = Integer.TryParse(QuantityTextBox.Text, intEnteredQty)
 
-        If blnIsValidIdInteger Then
-            'UPC entered was an Integer
-            If intEnteredUPC > 0 And intEnteredUPC <= mlstAvailableProducts.Count Then
-                'Entered UPC was in the range of valid UPC's.
 
-                'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
-                objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
-                                                                    Return intEnteredUPC = value.CodeUPC
-                                                                End Function)
+        If blnIsValidIdIntegerQty Then
+            If intEnteredQty > 0 Then  'And intEnteredQty IsNot vbEmpty
 
-                If objSelectedProduct.PayByWeight = True Then
-                    Dim dblEnteredWeight As Double = 0.00
+                If blnIsValidIdInteger Then
+                    'UPC entered was an Integer
+                    If intEnteredUPC > 0 And intEnteredUPC <= mlstAvailableProducts.Count Then
+                        'Entered UPC was in the range of valid UPC's.
 
-                    blnIsValidWeight = Double.TryParse(txtProductWeight.Text, dblEnteredWeight)
+                        'Finds the product in the list of available Products with the entered UPC and stores it as the selected product.
+                        objSelectedProduct = mlstAvailableProducts.Find(Function(value As ClsProduct)
+                                                                            Return intEnteredUPC = value.CodeUPC
+                                                                        End Function)
 
-                    If blnIsValidWeight = False Then
-                        MessageBox.Show("Please enter a valid weight for this product")
+                        Dim originalPrice = objSelectedProduct.ProductPrice
+
+                        objSelectedProduct.ProductPrice = objSelectedProduct.ProductPrice * intEnteredQty
+
+                        If objSelectedProduct.PayByWeight = True Then
+                            Dim dblEnteredWeight As Double = 0.00
+
+                            blnIsValidWeight = Double.TryParse(txtProductWeight.Text, dblEnteredWeight)
+
+                            If blnIsValidWeight = False Then
+                                MessageBox.Show("Please enter a valid weight for this product")
+
+                            Else
+                                objSelectedProduct.ProductPrice = dblEnteredWeight * objSelectedProduct.PricePerPound
+
+
+                            End If
+
+                        End If
+
+                        If objSelectedProduct.IsRestricted = True Then
+                            Dim dteDateOfBirth As Date = dtDoB.Value
+                            Dim TwentyFirstBirthday As Date = dteDateOfBirth.AddYears(21)
+
+                            If Date.Now < TwentyFirstBirthday Then
+                                blnIsUnderAge = True
+                                MessageBox.Show("Customer is underage.")
+                            End If
+                        End If
+
+                        If blnIsValidWeight = True And blnIsUnderAge = False Then
+
+                            'Adds the Selected product to our list of selected products.
+                            mlstCart.Add(objSelectedProduct)
+
+                            'Allows the selected index to update when the first Product is added to the cart.
+                            lbxProducts.SelectedIndex = -1
+
+                            'Changes the product selected in the list box to the newly added product.
+                            lbxProducts.SelectedIndex = mlstCart.Count - 1
+
+                            'Update the current transaction based on the newly added product.
+                            mobjCurrentTransaction.Products.Add(objSelectedProduct, 1)
+
+                            'Updates displayed SubTotal, Tax, and Total
+                            UpdateDisplayedTotals()
+
+                            'Enables the remove, void, and pay buttons.
+                            ToggleButtonUse(True)
+
+                            'Changes the change label back to zero if starting a new transaction.
+                            lblChangeAmount.Text = ("$0.00")
+
+                        End If
+                        objSelectedProduct.ProductPrice = originalPrice
+
+                        ResetBoxes()
 
                     Else
-                        objSelectedProduct.ProductPrice = dblEnteredWeight * objSelectedProduct.PricePerPound
+
+
+                        'Entered UPC wasn't in the range of valid UPC's.
+                        MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
 
                     End If
 
-                End If
+                    'After an item is added put focus and empty the UPC text box
+                    txtUPC.Text = String.Empty
 
-                If objSelectedProduct.IsRestricted = True Then
-                    Dim dteDateOfBirth As Date = dtDoB.Value
-                    Dim TwentyFirstBirthday As Date = dteDateOfBirth.AddYears(21)
+                    txtUPC.Focus()
 
-                    If Date.Now < TwentyFirstBirthday Then
-                        blnIsUnderAge = True
-                        MessageBox.Show("Customer is underage.")
-                    End If
-                End If
 
-                If blnIsValidWeight = True And blnIsUnderAge = False Then
-
-                    'Adds the Selected product to our list of selected products.
-                    mlstCart.Add(objSelectedProduct)
-
-                    'Allows the selected index to update when the first Product is added to the cart.
-                    lbxProducts.SelectedIndex = -1
-
-                    'Changes the product selected in the list box to the newly added product.
-                    lbxProducts.SelectedIndex = mlstCart.Count - 1
-
-                    'Update the current transaction based on the newly added product.
-                    mobjCurrentTransaction.Products.Add(objSelectedProduct, 1)
-
-                    'Updates displayed SubTotal, Tax, and Total
-                    UpdateDisplayedTotals()
-
-                    'Enables the remove, void, and pay buttons.
-                    ToggleButtonUse(True)
-
-                    'Changes the change label back to zero if starting a new transaction.
-                    lblChangeAmount.Text = ("$0.00")
+                Else
+                    'UPC entered wasn't an integer.
+                    MessageBox.Show("UPC must be an integer value. Please try again.")
 
                 End If
+
 
             Else
 
+                'Quantity entered is not greater than 0
 
-                    'Entered UPC wasn't in the range of valid UPC's.
-                    MessageBox.Show("Invalid UPC please enter in a valid UPC in the range of 1 - " & mlstAvailableProducts.Count.ToString())
+                MsgBox("Please enter a possitive number for Quantity of items", MsgBoxStyle.OkOnly, "Quantity Incorrect!")
 
             End If
 
-            'After an item is added put focus and empty the UPC text box
-            txtUPC.Text = String.Empty
-
-            txtUPC.Focus()
-
-
         Else
-            'UPC entered wasn't an integer.
-            MessageBox.Show("UPC must be an integer value. Please try again.")
+            'Quantity entered wasn't an integer.
+            MsgBox("Please enter correct quantity of items", MsgBoxStyle.OkOnly, "Quantity Incorrect!")
+
 
         End If
 
@@ -386,6 +419,19 @@ Public Class frmPointOfSale
         picProduct.Image = Nothing
     End Sub
 
+    ' Quantity Method
+    Private Sub CheckQuantity()
+
+    End Sub
+
+    ' Reset boxes
+    Private Sub ResetBoxes()
+        QuantityTextBox.Text = "1"
+        txtProductWeight.Text = ""
+
+    End Sub
+
+
     Private Sub ToggleButtonUse(ByVal blnEnabled As Boolean)
         'Toggles buttons based on passed in boolean value
         btnRemoveProduct.Enabled = blnEnabled
@@ -432,6 +478,14 @@ Public Class frmPointOfSale
 
         Return dblDiscount
     End Function
+
+    Private Sub txtProductWeight_TextChanged(sender As Object, e As EventArgs) Handles txtProductWeight.TextChanged
+
+    End Sub
+
+    Private Sub QuantityTextBox_TextChanged(sender As Object, e As EventArgs) Handles QuantityTextBox.TextChanged
+
+    End Sub
 
 
 #End Region
