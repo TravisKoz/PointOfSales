@@ -5,10 +5,11 @@
 DROP TABLE IF EXISTS [dbo].[Transaction_Product]
 
 -- Create the table Transactions
-CREATE TABLE [dbo].[Transaction_Product]
-(
-	[TransactionID] INT NOT NULL PRIMARY KEY, 
-    [UPC] INT NOT NULL, FOREIGN KEY ([UPC]) REFERENCES [dbo].[Products],
-    [Quantity] INT NULL,
+CREATE TABLE [dbo].[Transaction_Product] (
+    [TransactionID] INT NOT NULL,
+    [UPC]           INT NOT NULL,
+    [Quantity]      INT NULL,   
+    FOREIGN KEY ([TransactionID]) REFERENCES [dbo].[Transactions] ([TransactionID]),
+    FOREIGN KEY ([UPC]) REFERENCES [dbo].[Products] ([UPC])
 );
 

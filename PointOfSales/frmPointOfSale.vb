@@ -18,7 +18,6 @@ Public Class frmPointOfSale
     Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
 
-    Dim intEnteredQty As Integer
 
 
     'Define the form's constants
@@ -58,8 +57,8 @@ Public Class frmPointOfSale
 
         'Updates the descrition when a product in the cart is selected.
         If lbxProducts.SelectedIndex > -1 Then
-            lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString()
-            lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C")
+            lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString() & " X " & mobjCurrentTransaction.Products(objSelectedProduct).ToString()
+            lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C") & " per purchase of " & objSelectedProduct.ProductName.ToString()
             lblSelectedCategory.Text = objSelectedProduct.ProductCategory.ToString()
             lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
 
@@ -81,6 +80,8 @@ Public Class frmPointOfSale
         Dim blnIsValidWeight As Boolean = True
         Dim blnIsUnderAge As Boolean = False
 
+        Dim intEnteredQty As Integer
+
 
         Dim blnIsValidIdInteger = Integer.TryParse(txtUPC.Text, intEnteredUPC)
         Dim blnIsValidIdIntegerQty = Integer.TryParse(QuantityTextBox.Text, intEnteredQty)
@@ -99,9 +100,7 @@ Public Class frmPointOfSale
                                                                             Return intEnteredUPC = value.CodeUPC
                                                                         End Function)
 
-                        Dim originalPrice = objSelectedProduct.ProductPrice
-
-                        objSelectedProduct.ProductPrice = objSelectedProduct.ProductPrice * intEnteredQty
+                        objSelectedProduct.ProductPrice = objSelectedProduct.ProductPrice
 
                         If objSelectedProduct.PayByWeight = True Then
                             Dim dblEnteredWeight As Double = 0.00
@@ -134,14 +133,15 @@ Public Class frmPointOfSale
                             'Adds the Selected product to our list of selected products.
                             mlstCart.Add(objSelectedProduct)
 
+                            'Update the current transaction based on the newly added product.
+                            mobjCurrentTransaction.Products.Add(objSelectedProduct, intEnteredQty)
+
+
                             'Allows the selected index to update when the first Product is added to the cart.
                             lbxProducts.SelectedIndex = -1
 
                             'Changes the product selected in the list box to the newly added product.
                             lbxProducts.SelectedIndex = mlstCart.Count - 1
-
-                            'Update the current transaction based on the newly added product.
-                            mobjCurrentTransaction.Products.Add(objSelectedProduct, 1)
 
                             'Updates displayed SubTotal, Tax, and Total
                             UpdateDisplayedTotals()
@@ -153,7 +153,7 @@ Public Class frmPointOfSale
                             lblChangeAmount.Text = ("$0.00")
 
                         End If
-                        objSelectedProduct.ProductPrice = originalPrice
+
 
                         ResetBoxes()
 
@@ -282,26 +282,49 @@ Public Class frmPointOfSale
                 Dim dbConnection As SqlConnection = OpenDBConnection()
 
                 'Create a Command Object
-                Dim cmdInsert As New SqlCommand("INSERT INTO Transactions(Time) values('" & Date.Now & "');", dbConnection)
+                Dim cmdInsertTransaction As New SqlCommand("INSERT INTO Transactions(Time) values('" & Date.Now & "');", dbConnection)
 
 
-                MessageBox.Show(cmdInsert.CommandText)
-
-
-                cmdInsert.ExecuteReader()
+                cmdInsertTransaction.ExecuteReader()
 
                 dbConnection.Close()
+                dbConnection.Open()
+
+                ' Returns the newly created transaction ID
+                Dim cmdGetTransactionID As New SqlCommand("SELECT * FROM Transactions WHERE TransactionID=(SELECT max(TransactionID) FROM Transactions);", dbConnection)
+
+                mobjCurrentTransaction.TransactionID = CInt(cmdGetTransactionID.ExecuteScalar())
+
+                dbConnection.Close()
+
+                ' Loops through each product purchased and adds the quantity to the transaction_product intersection table.
+                For Each pair As KeyValuePair(Of ClsProduct, Integer) In mobjCurrentTransaction.Products
+
+                    dbConnection.Open()
+
+                    Dim product As ClsProduct = pair.Key
+                    Dim qty As Integer = pair.Value
+
+                    Dim cmdInsertTransProd As New SqlCommand("INSERT INTO Transaction_Product(TransactionID, UPC, Quantity) values('" & mobjCurrentTransaction.TransactionID & "', '" & product.CodeUPC & "', '" & qty & "');", dbConnection)
+
+                    cmdInsertTransProd.ExecuteReader()
+
+                    dbConnection.Close()
+
+
+                Next
+
                 dbConnection.Dispose()
 
                 'Change the displayed change.
                 lblChangeAmount.Text = (dblPayedCash - mobjCurrentTransaction.CalculateTotal()).ToString("C")
 
                 'Start a new transaction
-                ResetAmounts()
                 RemoveProductDescription()
                 UpdateDisplayedTotals()
                 mobjCurrentTransaction.Products.Clear()
                 mlstCart.Clear()
+                ResetAmounts()
 
                 txtCash.Text = ""
             Else
@@ -394,7 +417,7 @@ Public Class frmPointOfSale
 
 #Region "Helper Functions"
 
-    ' Don't think we need this anymore
+
     Private Sub ResetAmounts()
         'Sets the current transaction SubTotal, Tax, and Total to 0.00.
         lblSubTotalAmount.Text = "$0.00"
@@ -419,10 +442,6 @@ Public Class frmPointOfSale
         picProduct.Image = Nothing
     End Sub
 
-    ' Quantity Method
-    Private Sub CheckQuantity()
-
-    End Sub
 
     ' Reset boxes
     Private Sub ResetBoxes()
@@ -439,9 +458,6 @@ Public Class frmPointOfSale
         btnPay.Enabled = blnEnabled
     End Sub
 
-    Private Sub txtUPC_TextChanged(sender As Object, e As EventArgs) Handles txtUPC.TextChanged
-
-    End Sub
 
     ' Funtion the adds products by presing the return/enter key
     Private Sub txtUPC_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUPC.KeyDown
@@ -478,15 +494,6 @@ Public Class frmPointOfSale
 
         Return dblDiscount
     End Function
-
-    Private Sub txtProductWeight_TextChanged(sender As Object, e As EventArgs) Handles txtProductWeight.TextChanged
-
-    End Sub
-
-    Private Sub QuantityTextBox_TextChanged(sender As Object, e As EventArgs) Handles QuantityTextBox.TextChanged
-
-    End Sub
-
 
 #End Region
 End Class

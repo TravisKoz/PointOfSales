@@ -24,4 +24,5 @@ INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (7, N'jJohns
 INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (8, N'bBohnson', N'billPassword')
 INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (9, N'kUtgure', N'kylePassword')
 INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (10, N'jCooley', N'joshPassword')
+INSERT INTO [dbo].[Users] ([UserId], [Username], [Password]) VALUES (11, N'a', N'a')
 SET IDENTITY_INSERT [dbo].[Users] OFF

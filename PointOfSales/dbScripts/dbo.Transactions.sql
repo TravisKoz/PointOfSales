@@ -4,8 +4,8 @@
 -- Drop the old table if it exists
 DROP TABLE IF EXISTS [dbo].[Transactions]
 
--- Create the table Transactions
 CREATE TABLE [dbo].[Transactions] (
     [TransactionID] INT      IDENTITY (1, 1) NOT NULL,
-    [Time]          DATETIME NULL
+    [Time]          DATETIME NULL, 
+    CONSTRAINT [PK_Transactions] PRIMARY KEY ([TransactionID])
 );
