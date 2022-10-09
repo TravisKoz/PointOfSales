@@ -170,6 +170,8 @@
       <DependentUpon>dboProducts.mdf</DependentUpon>
     </Content>
     <Content Include="dbScripts\dbo.Products.sql" />
+    <Content Include="dbScripts\dbo.Transaction_Product.sql" />
+    <Content Include="dbScripts\dbo.Transactions.sql" />
     <Content Include="dbScripts\dbo.Users.sql" />
     <Content Include="images\Alcohol Liquid.png" />
     <Content Include="images\Allergy Relief.png" />
