@@ -40,6 +40,19 @@ Public Class ClsTransaction
         End Set
     End Property
 
+    'Public Function CalculateSubTotal(dblDiscount As Double) As Double
+    'Dim result As Double
+
+    'For Each pair As KeyValuePair(Of ClsProduct, Integer) In mlstProducts
+    'Dim product As ClsProduct = pair.Key
+    'Dim qty As Integer = pair.Value
+
+    ' result += product.ProductPrice * qty
+
+    '   Next
+
+    '    Return result * dblDiscount
+    'End Function
     Public Function CalculateSubTotal() As Double
         Dim result As Double
 

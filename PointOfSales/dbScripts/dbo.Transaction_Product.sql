@@ -8,8 +8,11 @@ DROP TABLE IF EXISTS [dbo].[Transaction_Product]
 CREATE TABLE [dbo].[Transaction_Product] (
     [TransactionID] INT NOT NULL,
     [UPC]           INT NOT NULL,
-    [Quantity]      INT NULL,   
+    [Quantity]      INT NULL,
+    [Discount]      DECIMAL(4, 4) NULL,
     FOREIGN KEY ([TransactionID]) REFERENCES [dbo].[Transactions] ([TransactionID]),
     FOREIGN KEY ([UPC]) REFERENCES [dbo].[Products] ([UPC])
 );
+
+
 

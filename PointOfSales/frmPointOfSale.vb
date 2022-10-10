@@ -17,6 +17,7 @@ Public Class frmPointOfSale
     Dim mlstAvailableProducts As New List(Of ClsProduct)
     Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
+    Dim dblDiscountAmount As Double = 1
 
 
 
@@ -291,7 +292,7 @@ Public Class frmPointOfSale
                 dbConnection.Open()
 
                 ' Returns the newly created transaction ID
-                Dim cmdGetTransactionID As New SqlCommand("SELECT * FROM Transactions WHERE TransactionID=(SELECT max(TransactionID) FROM Transactions);", dbConnection)
+                'Dim cmdGetTransactionID As New SqlCommand("SELECT * FROM Transactions WHERE TransactionID=(SELECT max(TransactionID) FROM Transactions);", dbConnection)
 
                 mobjCurrentTransaction.TransactionID = CInt(cmdGetTransactionID.ExecuteScalar())
 
@@ -305,7 +306,8 @@ Public Class frmPointOfSale
                     Dim product As ClsProduct = pair.Key
                     Dim qty As Integer = pair.Value
 
-                    Dim cmdInsertTransProd As New SqlCommand("INSERT INTO Transaction_Product(TransactionID, UPC, Quantity) values('" & mobjCurrentTransaction.TransactionID & "', '" & product.CodeUPC & "', '" & qty & "');", dbConnection)
+                    'Dim cmdInsertTransProd As New SqlCommand("INSERT INTO Transaction_Product(TransactionID, UPC, Quantity, Discount) values('" & mobjCurrentTransaction.TransactionID & "', '" & product.CodeUPC & "', '" & qty & "', '" & dblDiscount & "');", dbConnection)
+                    Dim cmdInsertTransProd As New SqlCommand("INSERT INTO Transaction_Product(TransactionID, UPC, Quantity, Discount) values('" & mobjCurrentTransaction.TransactionID & "', '" & product.CodeUPC & "', '" & qty & "');", dbConnection)
 
                     cmdInsertTransProd.ExecuteReader()
 
@@ -317,7 +319,7 @@ Public Class frmPointOfSale
                 dbConnection.Dispose()
 
                 'Change the displayed change.
-                lblChangeAmount.Text = (dblPayedCash - mobjCurrentTransaction.CalculateTotal()).ToString("C")
+                lblChangeAmount.Text = (dblPayedCash - (mobjCurrentTransaction.CalculateTotal() * dblDiscount)).ToString("C")
 
                 'Start a new transaction
                 RemoveProductDescription()
@@ -428,6 +430,7 @@ Public Class frmPointOfSale
 
     Private Sub UpdateDisplayedTotals()
         'Updates displayed SubTotal, Tax, and Total
+        'lblSubTotalAmount.Text = mobjCurrentTransaction.CalculateSubTotal(dblDiscountAmount).ToString("C")
         lblSubTotalAmount.Text = mobjCurrentTransaction.CalculateSubTotal().ToString("C")
         lblTaxAmount.Text = mobjCurrentTransaction.CalculateTax.ToString("C")
         lblTotalAmount.Text = mobjCurrentTransaction.CalculateTotal.ToString("C")
