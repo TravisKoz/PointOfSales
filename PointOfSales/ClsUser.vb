@@ -10,6 +10,7 @@ Public Class ClsUser
     'Define class fields
     Private mstrUsername As String
     Private mstrPassword As String
+    Private mblnIsAdmin As Boolean
 
     'Define class properties
     Public Property Username As String
@@ -27,6 +28,15 @@ Public Class ClsUser
         End Get
         Set(value As String)
             mstrPassword = value
+        End Set
+    End Property
+
+    Public Property IsAdmin As Boolean
+        Get
+            Return mblnIsAdmin
+        End Get
+        Set(value As Boolean)
+            mblnIsAdmin = value
         End Set
     End Property
 

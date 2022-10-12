@@ -46,6 +46,12 @@ Public Class frmPointOfSale
         'Disables the Remove, Void, and Pay buttons on load.
         ToggleButtonUse(False)
 
+
+        'Enables the Transaction button if the user is admin
+        If frmLogin.objEnteredUser.IsAdmin = True Then
+            btnTransactions.Enabled = True
+        End If
+
         'Starts the form out focused on the UPC text box.
         txtUPC.Focus()
     End Sub
@@ -79,6 +85,7 @@ Public Class frmPointOfSale
         Dim objSelectedProduct As New ClsProduct
         Dim blnIsValidWeight As Boolean = True
         Dim blnIsUnderAge As Boolean = False
+
 
         Dim intEnteredQty As Integer
 
@@ -351,6 +358,20 @@ Public Class frmPointOfSale
         frmLogin.txtUserName.Clear()
         frmLogin.txtPassword.Clear()
     End Sub
+
+    Private Sub btnTransaction_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+
+        'Closes the Point Of Sale Form.
+        Me.Close()
+
+        'Shows the Login Form
+        frmLogin.Show()
+
+        'Clears the previous username and password
+        'used to login.
+        frmLogin.txtUserName.Clear()
+        frmLogin.txtPassword.Clear()
+    End Sub
 #End Region
 
 #Region "Database Functions"
@@ -494,6 +515,10 @@ Public Class frmPointOfSale
 
         Return dblDiscount
     End Function
+
+    Private Sub btnTransactions_Click(sender As Object, e As EventArgs) Handles btnTransactions.Click
+
+    End Sub
 
 #End Region
 End Class

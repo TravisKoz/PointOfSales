@@ -7,6 +7,7 @@ Imports System.Data.SqlClient
 Public Class frmLogin
 
     Dim mListAvailableUsers As New List(Of ClsUser)
+    Public objEnteredUser As New ClsUser
 
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadUsers()
@@ -17,13 +18,13 @@ Public Class frmLogin
 
         Dim strEnteredUsername As String = txtUserName.Text.ToString()
         Dim strEnteredPassword As String = txtPassword.Text.ToString()
-        Dim objEnteredUser As New ClsUser
 
         Try
-            'Finds the user in the list of available users with the entered UPC and stores it as the selected User.
+            'Finds the user in the list of available users with the entered username and stores it as the selected User.
             objEnteredUser = mListAvailableUsers.Find(Function(value As ClsUser)
                                                           Return strEnteredUsername = value.Username
                                                       End Function)
+
 
             If objEnteredUser.Password = strEnteredPassword Then
                 ' The entered password matches the password for the entered user
@@ -68,6 +69,7 @@ Public Class frmLogin
                 'Storing a User's info.
                 objStoredUser.Username = rdrUser.Item("Username").ToString()
                 objStoredUser.Password = rdrUser.Item("Password").ToString()
+                objStoredUser.IsAdmin = CBool(rdrUser.Item("IsAdmin").ToString())
 
                 'Adds the stored product to the list of available products.
                 mListAvailableUsers.Add(objStoredUser)
