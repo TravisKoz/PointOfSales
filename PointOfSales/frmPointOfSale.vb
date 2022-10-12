@@ -17,7 +17,7 @@ Public Class frmPointOfSale
     Dim mlstAvailableProducts As New List(Of ClsProduct)
     Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
-    Dim dblDiscountAmount As Double = 1
+    Dim mobjDiscount As New ClsDiscount
 
 
 
@@ -272,12 +272,16 @@ Public Class frmPointOfSale
 
         'Cash given variables
         Dim dblPayedCash As Double
-        Dim dblDiscount As Double
+        'Dim dblDiscount As Double
         Dim blnIsValidIdDouble = Double.TryParse(txtCash.Text, dblPayedCash)
 
         If blnIsValidIdDouble Then
+            Dim decDiscount As Decimal = ClsDiscount.Discount(InputBox("Do you have a coupon code?", "Discount Code:"))
             'The entered cash value is a double.
-            If dblPayedCash >= mobjCurrentTransaction.CalculateTotal() Then
+            If dblPayedCash >= mobjCurrentTransaction.CalculateTotal(decDiscount) Then
+
+                ' mobjDiscount.DiscountCode = mobjDiscount.CouponCode()
+
 
                 ' Coupon code is  promted then saved as a discount
                 'dblDiscount = CouponCode()
@@ -326,7 +330,7 @@ Public Class frmPointOfSale
                 dbConnection.Dispose()
 
                 'Change the displayed change.
-                lblChangeAmount.Text = (dblPayedCash - (mobjCurrentTransaction.CalculateTotal())).ToString("C")
+                lblChangeAmount.Text = (dblPayedCash - (mobjCurrentTransaction.CalculateTotal(decDiscount))).ToString("C")
 
                 'Start a new transaction
                 RemoveProductDescription()
@@ -454,7 +458,7 @@ Public Class frmPointOfSale
         'lblSubTotalAmount.Text = mobjCurrentTransaction.CalculateSubTotal(dblDiscountAmount).ToString("C")
         lblSubTotalAmount.Text = mobjCurrentTransaction.CalculateSubTotal().ToString("C")
         lblTaxAmount.Text = mobjCurrentTransaction.CalculateTax.ToString("C")
-        lblTotalAmount.Text = mobjCurrentTransaction.CalculateTotal.ToString("C")
+        lblTotalAmount.Text = mobjCurrentTransaction.CalculateTotal(0.0D).ToString("C")
     End Sub
 
     Private Sub RemoveProductDescription()
@@ -495,29 +499,6 @@ Public Class frmPointOfSale
         e.SuppressKeyPress = True
 
     End Sub
-
-    ' Function to ask for coupon code
-    Function CouponCode() As Double
-
-        Dim dblDiscount As Double
-        Dim couponCodeForm As String
-
-        couponCodeForm = InputBox("Do you have a coupon code?")
-
-        If couponCodeForm = "" Then
-            ' Okay clicked, but no value was entered, so do nothing
-            dblDiscount = 1
-        Else
-            Select Case couponCodeForm
-                Case "testCode1"
-                    dblDiscount = 0.5
-                Case "testCode1"
-                    dblDiscount = 0.25
-            End Select
-        End If
-
-        Return dblDiscount
-    End Function
 
     Private Sub btnTransactions_Click(sender As Object, e As EventArgs) Handles btnTransactions.Click
 

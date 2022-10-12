@@ -56,6 +56,7 @@ Public Class ClsTransaction
     Public Function CalculateSubTotal() As Double
         Dim result As Double
 
+
         For Each pair As KeyValuePair(Of ClsProduct, Integer) In mlstProducts
             Dim product As ClsProduct = pair.Key
             Dim qty As Integer = pair.Value
@@ -71,7 +72,7 @@ Public Class ClsTransaction
         Return CalculateSubTotal() * 0.05
     End Function
 
-    Public Function CalculateTotal() As Double
-        Return CalculateSubTotal() + CalculateTax()
+    Public Function CalculateTotal(discount As Decimal) As Double
+        Return (CalculateSubTotal() * (1 - discount)) + CalculateTax()
     End Function
 End Class

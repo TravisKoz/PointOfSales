@@ -91,6 +91,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClsDiscount.vb" />
     <Compile Include="ClsProduct.vb" />
     <Compile Include="ClsTransaction.vb" />
     <Compile Include="ClsUser.vb" />
