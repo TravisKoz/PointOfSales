@@ -64,8 +64,8 @@ Public Class frmPointOfSale
 
         'Updates the descrition when a product in the cart is selected.
         If lbxProducts.SelectedIndex > -1 Then
-            lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString() & " X " & mobjCurrentTransaction.Products(objSelectedProduct).ToString()
-            lblSelectedPrice.Text = objSelectedProduct.ProductPrice.ToString("C") & " per purchase of " & objSelectedProduct.ProductName.ToString()
+            lblSelectedProduct.Text = objSelectedProduct.ProductName.ToString() & vbCrLf & "Qty " & mobjCurrentTransaction.Products(objSelectedProduct).ToString()
+            lblSelectedPrice.Text = "Price per Unit " & objSelectedProduct.ProductPrice.ToString("C")
             lblSelectedCategory.Text = objSelectedProduct.ProductCategory.ToString()
             lblSelectedDescription.Text = objSelectedProduct.ProductDescription.ToString()
 
