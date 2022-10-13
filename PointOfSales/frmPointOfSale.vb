@@ -491,7 +491,8 @@ Public Class frmPointOfSale
     Private Sub txtUPC_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUPC.KeyDown
 
         If e.KeyCode = Keys.Enter Then
-            btnAddProduct_Click(Nothing, Nothing)
+            QuantityTextBox.Select()
+
         Else
             Exit Sub
         End If
@@ -500,9 +501,18 @@ Public Class frmPointOfSale
 
     End Sub
 
-    Private Sub btnTransactions_Click(sender As Object, e As EventArgs) Handles btnTransactions.Click
 
+    Private Sub QuantityTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles QuantityTextBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnAddProduct_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+
+        e.SuppressKeyPress = True
     End Sub
+
+
 
 #End Region
 End Class

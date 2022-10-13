@@ -64,7 +64,7 @@ Partial Class frmPointOfSale
         Me.lbxProducts.FormattingEnabled = True
         Me.lbxProducts.ItemHeight = 29
         Me.lbxProducts.Location = New System.Drawing.Point(18, 68)
-        Me.lbxProducts.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.lbxProducts.Margin = New System.Windows.Forms.Padding(2)
         Me.lbxProducts.Name = "lbxProducts"
         Me.lbxProducts.Size = New System.Drawing.Size(413, 671)
         Me.lbxProducts.TabIndex = 0
@@ -73,7 +73,7 @@ Partial Class frmPointOfSale
         '
         Me.btnAddProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddProduct.Location = New System.Drawing.Point(466, 323)
-        Me.btnAddProduct.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnAddProduct.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddProduct.Name = "btnAddProduct"
         Me.btnAddProduct.Size = New System.Drawing.Size(242, 78)
         Me.btnAddProduct.TabIndex = 1
@@ -84,7 +84,7 @@ Partial Class frmPointOfSale
         '
         Me.btnRemoveProduct.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRemoveProduct.Location = New System.Drawing.Point(466, 436)
-        Me.btnRemoveProduct.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnRemoveProduct.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRemoveProduct.Name = "btnRemoveProduct"
         Me.btnRemoveProduct.Size = New System.Drawing.Size(242, 78)
         Me.btnRemoveProduct.TabIndex = 2
@@ -95,7 +95,7 @@ Partial Class frmPointOfSale
         '
         Me.btnVoidTransaction.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnVoidTransaction.Location = New System.Drawing.Point(466, 549)
-        Me.btnVoidTransaction.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnVoidTransaction.Margin = New System.Windows.Forms.Padding(2)
         Me.btnVoidTransaction.Name = "btnVoidTransaction"
         Me.btnVoidTransaction.Size = New System.Drawing.Size(242, 78)
         Me.btnVoidTransaction.TabIndex = 3
@@ -106,7 +106,7 @@ Partial Class frmPointOfSale
         '
         Me.btnLogout.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLogout.Location = New System.Drawing.Point(1150, 1082)
-        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnLogout.Margin = New System.Windows.Forms.Padding(2)
         Me.btnLogout.Name = "btnLogout"
         Me.btnLogout.Size = New System.Drawing.Size(242, 78)
         Me.btnLogout.TabIndex = 5
@@ -121,9 +121,9 @@ Partial Class frmPointOfSale
         Me.gbxSelectedProduct.Controls.Add(Me.lblSelectedProduct)
         Me.gbxSelectedProduct.Controls.Add(Me.picProduct)
         Me.gbxSelectedProduct.Location = New System.Drawing.Point(776, 17)
-        Me.gbxSelectedProduct.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.gbxSelectedProduct.Margin = New System.Windows.Forms.Padding(6)
         Me.gbxSelectedProduct.Name = "gbxSelectedProduct"
-        Me.gbxSelectedProduct.Padding = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.gbxSelectedProduct.Padding = New System.Windows.Forms.Padding(6)
         Me.gbxSelectedProduct.Size = New System.Drawing.Size(651, 886)
         Me.gbxSelectedProduct.TabIndex = 8
         Me.gbxSelectedProduct.TabStop = False
@@ -175,7 +175,7 @@ Partial Class frmPointOfSale
         'picProduct
         '
         Me.picProduct.Location = New System.Drawing.Point(42, 234)
-        Me.picProduct.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.picProduct.Margin = New System.Windows.Forms.Padding(6)
         Me.picProduct.Name = "picProduct"
         Me.picProduct.Size = New System.Drawing.Size(588, 301)
         Me.picProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -186,7 +186,7 @@ Partial Class frmPointOfSale
         '
         Me.btnPay.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPay.Location = New System.Drawing.Point(411, 1060)
-        Me.btnPay.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.btnPay.Margin = New System.Windows.Forms.Padding(6)
         Me.btnPay.Name = "btnPay"
         Me.btnPay.Size = New System.Drawing.Size(405, 100)
         Me.btnPay.TabIndex = 9
@@ -263,7 +263,7 @@ Partial Class frmPointOfSale
         '
         Me.txtCash.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtCash.Location = New System.Drawing.Point(411, 953)
-        Me.txtCash.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.txtCash.Margin = New System.Windows.Forms.Padding(6)
         Me.txtCash.Multiline = True
         Me.txtCash.Name = "txtCash"
         Me.txtCash.Size = New System.Drawing.Size(402, 91)
@@ -306,7 +306,7 @@ Partial Class frmPointOfSale
         '
         Me.txtUPC.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtUPC.Location = New System.Drawing.Point(466, 68)
-        Me.txtUPC.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.txtUPC.Margin = New System.Windows.Forms.Padding(6)
         Me.txtUPC.Multiline = True
         Me.txtUPC.Name = "txtUPC"
         Me.txtUPC.Size = New System.Drawing.Size(239, 70)
@@ -338,7 +338,7 @@ Partial Class frmPointOfSale
         '
         Me.txtProductWeight.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtProductWeight.Location = New System.Drawing.Point(466, 728)
-        Me.txtProductWeight.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.txtProductWeight.Margin = New System.Windows.Forms.Padding(6)
         Me.txtProductWeight.Multiline = True
         Me.txtProductWeight.Name = "txtProductWeight"
         Me.txtProductWeight.Size = New System.Drawing.Size(239, 70)
@@ -347,7 +347,7 @@ Partial Class frmPointOfSale
         'dtDoB
         '
         Me.dtDoB.Location = New System.Drawing.Point(28, 842)
-        Me.dtDoB.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.dtDoB.Margin = New System.Windows.Forms.Padding(6)
         Me.dtDoB.Name = "dtDoB"
         Me.dtDoB.Size = New System.Drawing.Size(365, 29)
         Me.dtDoB.TabIndex = 24
@@ -390,7 +390,7 @@ Partial Class frmPointOfSale
         Me.QuantityTextBox.AcceptsReturn = True
         Me.QuantityTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.QuantityTextBox.Location = New System.Drawing.Point(467, 222)
-        Me.QuantityTextBox.Margin = New System.Windows.Forms.Padding(6, 6, 6, 6)
+        Me.QuantityTextBox.Margin = New System.Windows.Forms.Padding(6)
         Me.QuantityTextBox.Name = "QuantityTextBox"
         Me.QuantityTextBox.Size = New System.Drawing.Size(239, 66)
         Me.QuantityTextBox.TabIndex = 27
@@ -402,7 +402,7 @@ Partial Class frmPointOfSale
         Me.btnTransactions.Enabled = False
         Me.btnTransactions.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnTransactions.Location = New System.Drawing.Point(852, 1082)
-        Me.btnTransactions.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnTransactions.Margin = New System.Windows.Forms.Padding(2)
         Me.btnTransactions.Name = "btnTransactions"
         Me.btnTransactions.Size = New System.Drawing.Size(242, 78)
         Me.btnTransactions.TabIndex = 29
@@ -441,7 +441,7 @@ Partial Class frmPointOfSale
         Me.Controls.Add(Me.btnRemoveProduct)
         Me.Controls.Add(Me.btnAddProduct)
         Me.Controls.Add(Me.lbxProducts)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmPointOfSale"
         Me.ShowInTaskbar = False
         Me.Text = "Point of Sale"

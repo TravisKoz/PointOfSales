@@ -104,4 +104,25 @@ Public Class frmLogin
         Return dbConnection
     End Function
 
+
+    Private Sub txtUserName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtUserName.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            txtPassword.Select()
+        Else
+            Exit Sub
+        End If
+
+        e.SuppressKeyPress = True
+    End Sub
+
+
+    Private Sub txtPassword_KeyDown(sender As Object, e As KeyEventArgs) Handles txtPassword.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnLogin_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+
+        e.SuppressKeyPress = True
+    End Sub
 End Class
