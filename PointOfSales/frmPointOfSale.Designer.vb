@@ -386,7 +386,7 @@ Partial Class frmPointOfSale
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1015, 737)
+        Me.ClientSize = New System.Drawing.Size(791, 655)
         Me.Controls.Add(Me.btnTransactions)
         Me.Controls.Add(Me.quantityLabel)
         Me.Controls.Add(Me.QuantityTextBox)
