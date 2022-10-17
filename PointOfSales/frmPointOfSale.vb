@@ -20,7 +20,6 @@ Public Class frmPointOfSale
     Dim mobjDiscount As New ClsDiscount
 
 
-
     'Define the form's constants
     Const TaxRate As Double = 0.05
 #End Region
@@ -113,7 +112,8 @@ Public Class frmPointOfSale
                         If objSelectedProduct.PayByWeight = True Then
                             Dim dblEnteredWeight As Double = 0.00
 
-                            blnIsValidWeight = Double.TryParse(txtProductWeight.Text, dblEnteredWeight)
+
+                            blnIsValidWeight = Double.TryParse(InputBox("Enter the product's weight?", "lbs:"), dblEnteredWeight)
 
                             If blnIsValidWeight = False Then
                                 MessageBox.Show("Please enter a valid weight for this product")
@@ -474,7 +474,6 @@ Public Class frmPointOfSale
     ' Reset boxes
     Private Sub ResetBoxes()
         QuantityTextBox.Text = "1"
-        txtProductWeight.Text = ""
 
     End Sub
 
