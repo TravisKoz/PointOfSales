@@ -17,11 +17,7 @@ Public Class frmPointOfSale
     Dim mlstAvailableProducts As New List(Of ClsProduct)
     Dim mlstCart As New BindingList(Of ClsProduct)
     Dim mobjCurrentTransaction As New ClsTransaction
-    Dim mobjDiscount As New ClsDiscount
 
-
-    'Define the form's constants
-    Const TaxRate As Double = 0.05
 #End Region
 
 #Region "On Load"
@@ -109,6 +105,8 @@ Public Class frmPointOfSale
 
                         objSelectedProduct.ProductPrice = objSelectedProduct.ProductPrice
 
+
+
                         If objSelectedProduct.PayByWeight = True Then
                             Dim dblEnteredWeight As Double = 0.00
 
@@ -138,11 +136,19 @@ Public Class frmPointOfSale
 
                         If blnIsValidWeight = True And blnIsUnderAge = False Then
 
-                            'Adds the Selected product to our list of selected products.
-                            mlstCart.Add(objSelectedProduct)
 
-                            'Update the current transaction based on the newly added product.
-                            mobjCurrentTransaction.Products.Add(objSelectedProduct, intEnteredQty)
+                            If mobjCurrentTransaction.Products.ContainsKey(objSelectedProduct) Then
+                                mobjCurrentTransaction.Products.Item(objSelectedProduct) += intEnteredQty
+
+                            Else
+
+                                'Adds the Selected product to our list of selected products.
+                                mlstCart.Add(objSelectedProduct)
+
+                                'Update the current transaction based on the newly added product.
+                                mobjCurrentTransaction.Products.Add(objSelectedProduct, intEnteredQty)
+
+                            End If
 
 
                             'Allows the selected index to update when the first Product is added to the cart.
