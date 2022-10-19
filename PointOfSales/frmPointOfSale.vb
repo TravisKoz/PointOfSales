@@ -371,11 +371,9 @@ Public Class frmPointOfSale
         frmLogin.txtPassword.Clear()
     End Sub
 
-    Private Sub btnTransaction_Click(sender As Object, e As EventArgs) Handles btnTransaction.Click
-
+    Private Sub btnTransactions_Click(sender As Object, e As EventArgs) Handles btnTransactions.Click
         'Creates a message Box giving a statement
         MessageBox.Show("Currently under development")
-
     End Sub
 #End Region
 
@@ -519,6 +517,8 @@ Public Class frmPointOfSale
 
         e.SuppressKeyPress = True
     End Sub
+
+
 
 
 #End Region
