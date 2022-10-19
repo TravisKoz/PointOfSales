@@ -371,18 +371,11 @@ Public Class frmPointOfSale
         frmLogin.txtPassword.Clear()
     End Sub
 
-    Private Sub btnTransaction_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+    Private Sub btnTransaction_Click(sender As Object, e As EventArgs) Handles btnTransaction.Click
 
-        'Closes the Point Of Sale Form.
-        Me.Close()
+        'Creates a message Box giving a statement
+        MessageBox.Show("Currently under development")
 
-        'Shows the Login Form
-        frmLogin.Show()
-
-        'Clears the previous username and password
-        'used to login.
-        frmLogin.txtUserName.Clear()
-        frmLogin.txtPassword.Clear()
     End Sub
 #End Region
 
