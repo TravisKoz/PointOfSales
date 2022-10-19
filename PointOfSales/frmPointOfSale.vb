@@ -517,6 +517,15 @@ Public Class frmPointOfSale
         e.SuppressKeyPress = True
     End Sub
 
+    Private Sub txtCash_KeyDown(sender As Object, e As KeyEventArgs) Handles txtCash.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnPay_Click(Nothing, Nothing)
+        Else
+            Exit Sub
+        End If
+
+        e.SuppressKeyPress = True
+    End Sub
 
 
 #End Region
